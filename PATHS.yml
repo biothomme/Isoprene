@@ -1,0 +1,15 @@
+DATA:
+  ROOT:
+    ./cache
+
+SCRIPTS:
+  ROOT:
+    ./src
+
+NOTEBOOKS:
+  ROOT:
+    ./notebooks
+
+DOCUMENTATION:
+  ROOT:
+    ./docs
