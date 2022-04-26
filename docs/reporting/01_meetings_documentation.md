@@ -17,7 +17,7 @@ Short meeting with David. Sorry for not sending mail calendar invites. That will
 
 Decision matrix is still in progress. But criteria scheme was presented.
 
-We discussed the criteria according to notebooks/01_model_exploration/02_submodel_criteria.ipynb . David added an 8th criterion of “Impact of improved model on decisionmakers in climate change issue”.
+We discussed the criteria according to notebooks/01_model_exploration/02_submodel_criteria.ipynb . David added an 8th criterion of “Impact of improved model on decisionmakers in climate change issues”.
 
 As the CLM and its 30 submodels include many unrelevant submodels for us, we decided to also consider some “small” LSMs that deal with e.g.
 
