@@ -41,8 +41,16 @@ TODO: make the decision matrix
 MEETING PLAN: weekly thursdays 5:30-6:00 pm (with calendar invites)
 
 
+---
+## Meeting 03 <a id="M03"></a>
+#### *28th April 2022*
+Meeting with Björn and Lucas. Lucas got introduced to the project. Björn pointed out that we want to deal with a key policy decision and that in the PINN appraoch the model is our ground truth. Then one can explore the parameter space.
 
+For fetching the LSMs in a more efficient way, we decided to selectively focus on LSMs that deal with forest restoration / aforestation / deforestation. The CLM submodels should then be explored, if needed.
 
+Furthermore Björn recommended [this paper](https://gmd.copernicus.org/articles/15/1913/2022/) to understand the concept of emulators.
+
+TODO: make the decision matrix
 
 
 
