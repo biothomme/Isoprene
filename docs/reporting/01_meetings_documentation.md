@@ -54,5 +54,39 @@ TODO: make the decision matrix
 
 
 
+---
+## Meeting 04 <a id="M04"></a>
+#### *5th May 2022*
+Points for discussion:
+- Emulator approach (Baker et al. 2022)
+    Using sparse gaussian process emulator to model gross primary production emulating JULES
+    - Multiple runs of JULES on subset of data with randomized parameters
+    - Optimization/training of SGP emulators tuning parameters (+ testing with seperate subset)
+    - Running emulator on total dataset
+    - Explore influence of model parameters
+    What we can learn? As model parameters are not well understood in LSMs, we could use such emulators to find out importance of such.
+    Also they show that we can make a lot of final parameter assumptions to split our submodel from others.
+- LSMs or VDMs?
+    Land surface models are focussing on global processes and their dynamics. For forest restoration they have secondary value, as a deeper understanding of vegetation processes is needed. Vegetation dynamical models (VDM) focus on such, but more feel like computer games
+    One very fancy but questionable approach by Pirk et al.
+- Problems of LSMs / VDMs (Hanbury-Brown, et al., 2022, Fisher and Koven 2020, Blyth, et al., 2021)
+    - Modularity of models (implementation of boundary of submodels)
+    - Modeling organism traits:
+        - Empirical
+        - Optimization
+        - Agent competition
+    - Processes of contageousness/adjacency (fire, pests, ...)
+    - VDM specific: reproductive allocation, dispersal geography
+- Got feedback on Master thesis with Fabien, 2 weeks break of LSMs for finishing would be amazing
 
 
+It was an informative meeting with Björn and Lucas. We went through the points of discussion.
+1) We decided against VDMs because of the lack of dealing with performance issues, as such are often dealing with only small ranges. 
+2) So back to the LSMs, it seems to be the best to focus on the most established models. These are probably in the area of carbon flux, so maybe GPP or something related. Here it would be interesting to implement [RPC scenarios](https://tntcat.iiasa.ac.at/RcpDb/dsd?Action=htmlpage&page=welcome#rcpinfo) into the model input.
+3) Against what I said, Gaussian Processes are not really simple, but hard to implement and very powerful tools in probabilistic computation. Limitation are large sets of parameters.
+4) Björn recommended [a review on machine learning in LSMs](https://www.mdpi.com/2673-4834/2/1/11/htm#B55-earth-02-00011) as well as a paragraph of another one (see screenshot in slack).
+5) Break for thesis finishing was approved - back on 20th of May.
+
+TODO: make the decision matrix for GPP LSMs. read the papers
+
+MEETING PLAN: next meeting 26th of May
