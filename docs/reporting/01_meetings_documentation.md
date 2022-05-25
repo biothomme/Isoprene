@@ -90,3 +90,34 @@ It was an informative meeting with Björn and Lucas. We went through the points 
 TODO: make the decision matrix for GPP LSMs. read the papers
 
 MEETING PLAN: next meeting 26th of May
+
+
+---
+## Meeting 05 <a id="M05"></a>
+#### *26th May 2022*
+**Points for discussion:**
+
+Refresh: subselection of LSMs with policy importance probably best in GPP models
+
+
+- Progress last week
+    - read papers on deep learning in (land surface) modelling
+    - investigated on RCP emission scenarios and digged into data opportunities
+    - "assembled idea"
+    
+    
+1) Paper insights
+    - Flux sites can be "multiplied" using ML
+    - Model intercomparisons can be used to constrain uncertainty of hardly describiable processes
+    - Neural operators are successful emulators of geospatial dynamics
+2) RCP scenarios
+    - policy relevant emission and land use change simulations
+    - 4 independent pathways characterized by their radiative forcing level in the year 2100
+    - Modeled parameters: black carbon, organic carbon, $CH_4$, Sulfur, $NO_x$, volatile organic compounds, $CO$, $CO_2$ and $NH_3$, etc., as well as the radiative forcing of the atmosphere.
+    - Data available here: [RCP Database](https://tntcat.iiasa.ac.at/RcpDb/dsd?Action=htmlpage&page=download)
+3) Back to the CliMA Land model
+    - After looking on the code, it seems wonderful (though it is refactured) as it is designed in a modular way, such that submodels / subdynamics can be exchanged by others easily. Thus, finetuning and altering it seems to be easy. Also, for GPP it seems to be a model that considers a lot of importnat fluxes within the plants, that usually are neglected. More details on plant processes are summarized by the CliMA Land crew ([Wang, Frankenberg, 2022](https://doi.org/10.5194/bg-2022-96)).
+4) Data for GPP models
+    - GPP models need a source for canopy height. Therefore the [new map](https://nlang.users.earthengine.app/view/global-canopy-height-2020) by Lang, et al. (2022) could be used, as it is available.
+5) Time for a proposal
+    - https://www.science.org/doi/abs/10.1126/science.aax0848
