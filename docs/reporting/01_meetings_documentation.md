@@ -108,7 +108,7 @@ Refresh: subselection of LSMs with policy importance probably best in GPP models
     
 1) Paper insights
     - Flux sites can be "multiplied" using ML
-    - Model intercomparisons can be used to constrain uncertainty of hardly describiable processes
+    - Model intercomparisons can be used to constrain uncertainty of hardly describable processes
     - Neural operators are successful emulators of geospatial dynamics
 2) RCP scenarios
     - policy relevant emission and land use change simulations
@@ -117,7 +117,21 @@ Refresh: subselection of LSMs with policy importance probably best in GPP models
     - Data available here: [RCP Database](https://tntcat.iiasa.ac.at/RcpDb/dsd?Action=htmlpage&page=download)
 3) Back to the CliMA Land model
     - After looking on the code, it seems wonderful (though it is refactured) as it is designed in a modular way, such that submodels / subdynamics can be exchanged by others easily. Thus, finetuning and altering it seems to be easy. Also, for GPP it seems to be a model that considers a lot of importnat fluxes within the plants, that usually are neglected. More details on plant processes are summarized by the CliMA Land crew ([Wang, Frankenberg, 2022](https://doi.org/10.5194/bg-2022-96)).
+    - Open source
+    - Modular + transparent
+    - Vibrant community
+    - Currently refactored
 4) Data for GPP models
     - GPP models need a source for canopy height. Therefore the [new map](https://nlang.users.earthengine.app/view/global-canopy-height-2020) by Lang, et al. (2022) could be used, as it is available.
 5) Time for a proposal
-    - https://www.science.org/doi/abs/10.1126/science.aax0848
+    - Building an emulator for CliMA Land v0.1
+    - Trying different trainings with/without [constraining uncertainty](../../notebooks/pinN1_stories/02_methodologies/01_deep_learning_lsm.ipynb#paper2).
+    - Parameter exploration of CliMA Land
+        - Advantage of modularity
+        - Submodels can be altered
+        - Thus, emulator should be modularly defined
+    - RCP simulation output (e.g. emssions) should be included in emulator features
+    - Emulator could be used for webapp like [EN_ROADS](https://en-roads.climateinteractive.org/scenario.html?v=22.5.0) regarding temperature increase
+        - RCP scenarios
+        - Different aspects (magnitude, region, ...) of global afforestation (using [Bastin, et al. (2019)](https://doi.org/10.1126/science.aax0848))
+        - Accounting for feedback effects like $CO_2$ fertilization
