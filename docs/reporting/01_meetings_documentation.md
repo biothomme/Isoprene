@@ -142,4 +142,23 @@ Refresh: subselection of LSMs with policy importance probably best in GPP models
     - Designed to model Nitrogen turnover in soils with plant interaction
     - Documentation could be good source for equations on soil processes 
 
-Meeting was postponed due to conferences. Instead it happened on May 31st, 2:15-3:00 CEST. 
+Meeting was postponed due to conferences. Instead it happened on May 31st, 2:15-3:00 CEST.
+
+Meeting felt very good, and myself challenged to describe the summarized papers. I learnt, that recent papers in computer science can be tricky - not reproduced... David explained [MODIS data](https://lpdaac.usgs.gov/products/mod17a3hgfv061/) a bit, as well as the importance of looking for the actual physical source the datasets are based on (e.g. LAI). Resolution of 10 km x 10 km is very high in climate models. Probably the same can be said for LSMs. 
+
+The question raised, if and to which extend are LSMs spatio-temporal?
+So, before really discussing the proposal we decided on doing something similar: trying to run the CliMA Land model for a simple dataset. To get a feeling, we can vary one parameter e.g. $CO_2$ concentration or ratiative forcing and check how the output changes.
+
+One problem, that may come up is the need for performance. Thus, I will contact Mette Lille as my course coordinator if we can get some caccess to Uppmax for it.
+
+As last point, the briefly mentioned Expert-N model could also be a good attempt (maybe later) as it is very extensive but too computatnionally demanding. We should keep it in mind.
+
+
+TODO: 
+	- Try to run the CliMA Land model with simple parameter changes
+	- Find out to which extend CliMA land is spatio temporal
+	- Find out if we can get Uppmax access
+
+GAVE UP: making decision matrix for published models. Too extensive.
+
+MEETING PLAN: next meeting 9th of June (2nd of June if neccessary)
