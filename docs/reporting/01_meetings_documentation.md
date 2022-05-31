@@ -131,7 +131,15 @@ Refresh: subselection of LSMs with policy importance probably best in GPP models
         - Submodels can be altered
         - Thus, emulator should be modularly defined
     - RCP simulation output (e.g. emssions) should be included in emulator features
-    - Emulator could be used for webapp like [EN_ROADS](https://en-roads.climateinteractive.org/scenario.html?v=22.5.0) regarding temperature increase
+    - Emulator could be used for webapp like [En-ROADS](https://en-roads.climateinteractive.org/scenario.html?v=22.5.0) regarding temperature increase
         - RCP scenarios
         - Different aspects (magnitude, region, ...) of global afforestation (using [Bastin, et al. (2019)](https://doi.org/10.1126/science.aax0848))
         - Accounting for feedback effects like $CO_2$ fertilization
+6) APPENDIX 1: Instance model [Expert-N](https://expert-n.uni-hohenheim.de/en)
+    - Recommended by Marco Körner (contacted by Björn)
+    - Well documented open code model (written in C?!)
+    - Pretty extensive and modular
+    - Designed to model Nitrogen turnover in soils with plant interaction
+    - Documentation could be good source for equations on soil processes 
+
+Meeting was postponed due to conferences. Instead it happened on May 31st, 2:15-3:00 CEST. 
