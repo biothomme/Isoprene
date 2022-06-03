@@ -1,6 +1,9 @@
 # data
 cache
 
+# external packages
+ext_src
+
 # artefacts of computer
 *DS_Store
 .ipynb_checkpoints
