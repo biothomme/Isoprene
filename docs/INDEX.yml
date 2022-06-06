@@ -4,12 +4,25 @@ CORE:
       ../cache
     meta:
       All the data should be stored here. Best would be in subdirectories.
+  # end DATA
   
   CODE: 
     PATH:
       ../src
     meta:
       All code packages should be found here. Subdirectories for subsequent ideas.
+    
+    MODEL_EXPLORATION:
+      PATH:
+        ../src/01_model_exploration
+      meta:
+        Directory for code/classes that are/could be used in 01_model_exploration notebooks.
+    TRIALS:
+      PATH:
+        ../src/03_test_models
+      meta:
+        Directory for code/classes that are/could be used in 03_test_models notebooks.
+  # end CODE
 
   DOCUMENTATION:
     PATH:
@@ -22,21 +35,100 @@ CORE:
         ../docs/presentations
       meta:
         For different types of slides for presentations. Large files should not be gitted here.
-    
+      
+      01_LITREVIEW:
+        PATH:
+          ./docs/presentations/01_literature_review
+        meta:
+          First pesentation to introduce LSMs in our meetings.
+      # end PRESENTATION
     REPORTING:
       PATH:
         ../docs/reporting
       meta:
         For reports, and work progress documentation files.
+      
+      MEETINGS:
+        PATH:
+          ../docs/reporting/01_meetings_documentation.md
+        meta:
+          Summaries of all meetings with links to notebooks, literature and data sources.
+    # end REPORTING
+  # end DOCUMENTATION
   
   NOTEBOOKS:
     PATH:
-      ../notebooks
+      ../notebooks/pinN1_stories
     meta:
-      It makes sense to divide code and notebooks. Thus, they should be linked via import by __init__.py files (at least from src -> notebooks). Notebooks should be split into subdirectories as well as numbered.
-
+      It makes sense to divide code and notebooks. Thus, they should be linked via import by __init__.py files (at least from src -> notebooks). Notebooks should be split into subdirectories as well as numbered. The files should be organized in a way to build a jupyter book out of it.
+    
+    REFERENCES:
+      PATH:
+        ../notebooks/pinN1_stories/references.bib
+      meta:
+        BibTex file of all references of this project.
+    # end REFERENCES
+    
+    MODEL_EXPLORATION:
+      PATH:
+        ../notebooks/pinN1_stories/01_model_exploration
+      meta:
+        This directory includes notebooks that rank and analyze published LSMs and related models.
+      01_RANKING:
+        PATH:
+          ../notebooks/pinN1_stories/01_model_exploration/01_submodel_ranking.ipynb
+        meta:
+          Ranking of submodels of CLM and some other LSMs
+      02_RANKING_CRITERIA:
+        PATH:
+          ../notebooks/pinN1_stories/01_model_exploration/02_submodel_criteria.ipynb
+        meta:
+          Decision sheet for ranking (sub)models.
+      03_PROBLSMS:
+        PATH:
+          ../notebooks/pinN1_stories/01_model_exploration/03_problems_of_lsms.ipynb
+        meta:
+          Problems of LSMs.
+    # end MODEL_EXPLORATION
+    
+    METHODOLOGIES:
+      PATH:
+        ../notebooks/pinN1_stories/02_methodologies
+      meta:
+        Analyses of methods that are used in LSMs.
+        
+      01_DEEPLEARNING:
+        PATH:
+          ../notebooks/pinN1_stories/02_methodologies/01_deep_learning_lsm.ipynb
+        meta:
+          Summaries of papers that use ML approaches in LSMs and related models.
+          
+      02_DATASOURCES:
+        PATH:
+          ../notebooks/pinN1_stories/02_methodologies/02_sources_for_data_on_gpp.ipynb
+        meta:
+          Summaries of datasources that we could use for GPP LSM emulator.
+    # end METHODOLOGIES
+    
+    TRIALS:
+      PATH:
+        ../notebooks/pinN1_stories/03_test_models
+      meta:
+        Trials of established LSMs, to understand their behaviour and application.
+      
+      01_CLIMA_LAND_VANILLA:
+        PATH:
+          ../notebooks/pinN1_stories/03_test_models/01_clima_land_vanilla.ipynb
+        meta:
+          First try to understand and run the CliMA land v0.1 model. Simple parameter exchange; performed in Julia.
+    # end TRIALS
+    
+    
+  # end NOTEBOOKS
   CATALOG:
     PATH:
       ../PATHS.yml
     meta:
       This is the most important file, keeping track of all important files that could be imported in any code. YAML-type allows simple importing.
+  # end CATALOG
+# end

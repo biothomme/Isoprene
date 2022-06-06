@@ -1,15 +1,66 @@
 DATA:
   ROOT:
     ./cache
+# end DATA
 
-SCRIPTS:
+CODE:
   ROOT:
     ./src
+# end CODE
 
 NOTEBOOKS:
   ROOT:
     ./notebooks
+  REFERENCES:
+    ./notebooks/pinN1_stories/references.bib
+    
+  MODEL_EXPLORATION:
+    ROOT:
+      ./notebooks/pinN1_stories/01_model_exploration
+    01_RANKING:
+      ./notebooks/pinN1_stories/01_model_exploration/01_submodel_ranking.ipynb
+    02_RANKING_CRITERIA:
+      ./notebooks/pinN1_stories/01_model_exploration/02_submodel_criteria.ipynb
+    03_PROBLSMS:
+      ./notebooks/pinN1_stories/01_model_exploration/03_problems_of_lsms.ipynb
+  # end MODEL_EXPLORATION
+  
+  METHODOLOGIES:
+    ROOT:
+      ./notebooks/pinN1_stories/02_methodologies
+    01_DEEPLEARNING:
+      ./notebooks/pinN1_stories/02_methodologies/01_deep_learning_lsm.ipynb
+    02_DATASOURCES:
+      ./notebooks/pinN1_stories/02_methodologies/02_sources_for_data_on_gpp.ipynb
+  # end METHODOLOGIES
+  
+  TRIALS:
+    ROOT:
+      ./notebooks/pinN1_stories/03_test_models
+    01_CLIMA_LAND_VANILLA:
+      ./notebooks/pinN1_stories/03_test_models/01_clima_land_vanilla.ipynb
+  # end TRIALS
+# end NOTEBOOKS
+
+EXTERNAL:
+  ROOT:
+    ./ext_src
+  01_CLIMA_LAND_V01:
+    ROOT:
+      ./ext_src/01_julia_land_v01/Land
+# end EXTERNAL
 
 DOCUMENTATION:
   ROOT:
     ./docs
+  PRESENTATIONS:
+    ROOT: 
+      ./docs/presentations
+    01_LITREVIEW:
+      ./docs/presentations/01_literature_review
+  REPORTING:
+    ROOT:
+      ./docs/reporting
+    MEETINGS:
+      ./docs/reporting/01_meetings_documentation.md
+# end DOCUMENTATION
