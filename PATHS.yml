@@ -1,7 +1,15 @@
 DATA:
   ROOT:
     ./cache
-# end DATA
+  TRIAL:
+    ROOT:
+      ./cache/01_trial_data
+    CLIMA_LAND:
+      ROOT:
+        ./cache/01_trial_data/01_clima_land
+      WRAPPER_DATA:
+        ./cache/01_trial_data/01_clima_land/era5_2019_117_296_1X.csv
+  # end DATA
 
 CODE:
   ROOT:
@@ -48,6 +56,8 @@ EXTERNAL:
   01_CLIMA_LAND_V01:
     ROOT:
       ./ext_src/01_julia_land_v01/Land
+    WRAPPER:
+      ./ext_src/01_julia_land_v01/Land/clima-land.jl
 # end EXTERNAL
 
 DOCUMENTATION:

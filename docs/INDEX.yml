@@ -122,9 +122,26 @@ CORE:
         meta:
           First try to understand and run the CliMA land v0.1 model. Simple parameter exchange; performed in Julia.
     # end TRIALS
-    
-    
   # end NOTEBOOKS
+  
+  EXTERNALS:
+    PATH:
+      ./ext_src
+    meta:
+      Directory with external larger projects, e.g. LSM clones.
+    
+    01_CLIMA_LAND_V01:
+      PATH:
+        ./ext_src/01_julia_land_v01/Land
+      meta:
+        Clone of the CliMA land model v0.1.
+      WRAPPER:
+        PATH:
+          ../ext_src/01_julia_land_v01/Land/clima-land.jl
+        meta:
+          Script that wraps the julia land model for its tutorial. Could be used to analyze the application of the model.
+    # end 01_CLIMA_LAND_V01
+  # end EXTERNALS
   CATALOG:
     PATH:
       ../PATHS.yml
