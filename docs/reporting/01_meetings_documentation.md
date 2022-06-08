@@ -162,3 +162,22 @@ TODO:
 GAVE UP: making decision matrix for published models. Too extensive.
 
 MEETING PLAN: next meeting 9th of June (2nd of June if neccessary)
+
+
+---
+## Meeting 06 <a id="M06"></a>
+#### *9th June 2022*
+**Points for discussion:**
+
+Refresh: One of the most relevant parameters in LSMs for policy (here, climate) is GPP, the uptake of anorganic carbon by plants. Thus, we focus on it with our emulator. Due to its high detail and implementation we decided to start of with the CliMA Land v0.1 model, which allows to predict GPP given environmental parameters. To start off, it was important to understand the dimensionality of the model and get a feeling of its behaviour.
+
+
+- Progress last week
+    - Trying a vanilla trial of CliMA Land simulation
+    - Investigated on its dimensionalities
+    - Organized UPPMAX access (Part 1 of 2)
+    
+
+1) CliMA Land does not have communication between grid cells - as most LSMs:
+<details style="background-color:#eeeeee"><summary>We can read in <a href="https://doi.org/10.1029/2018MS001453">Fisher, Koven (2020)</a></summary>
+<img src="./figures/01_lsm_no_diffusion.png"> </img></details>
