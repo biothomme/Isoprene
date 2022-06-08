@@ -8,3 +8,6 @@ ext_src
 *DS_Store
 .ipynb_checkpoints
 __pycache__
+
+# all figures in the documentation
+docs/*/figures
