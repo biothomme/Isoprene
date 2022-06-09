@@ -174,10 +174,37 @@ Refresh: One of the most relevant parameters in LSMs for policy (here, climate) 
 
 - Progress last week
     - Trying a vanilla trial of CliMA Land simulation
-    - Investigated on its dimensionalities
+    - Investigated on its dimensionality
     - Organized UPPMAX access (Part 1 of 2)
     
 
-1) CliMA Land does not have communication between grid cells - as most LSMs:
+1) CliMA Land does not have communication between grid cells implemented - as many LSMs:
 <details style="background-color:#eeeeee"><summary>We can read in <a href="https://doi.org/10.1029/2018MS001453">Fisher, Koven (2020)</a></summary>
-<img src="./figures/01_lsm_no_diffusion.png"> </img></details>
+<img src="./figures/01_lsm_subgrids.png"> <img src="./figures/02_lsm_no_diffusion.png"> </img></details>
+
+- Still, as one can model the grid cells oneself an implementation of communicating grid cells would be possible.
+- Nonetheless, diffusion and adjacency are important processes in macroecology.
+
+
+2) [Ran CliMA Land](../../notebooks/pinN1_stories/03_test_models/01_clima_land_vanilla.ipynb) on single grid cell following tutorial.
+<details style="background-color:#eeeeee"><summary>Here is a sketch of the global model with detail on one grid cell for GPP modeling:</summary>
+<img src="./figures/03_clima_gpp_summary.jpg"> </img></details>
+
+  - Single run needs 7-8 min
+  - Needs input parameters on any timestep of the simulation
+  - Varied $CO_2$ concentration (fixed value) and saw correlation with GPP
+  - Need to investigate negative GPP for biological meaning
+
+3) UPPMAX compute project will probably be approved. Storage (more than 128 GB) project is questionable but we will see... Thanks to Mette Lillie for help. I have a meeting on Tuesday to discuss the further steps.
+
+
+Meeting with David and Björn. We discussed the trial of the CliMA Land model and were pretty surprised of its temporal independence. Also, my Supervisors were curious of how the model input can be given by other CliMA models. Therefore, I should make a dependency graph.
+
+David mentioned "Auxiliary Supervision" and that LSMs and AI could learn from each other (e.g. about how to build models like Lego).
+
+TODO:
+- Find out more about negative GPP in a biological sense
+- Visualize the dependency graph of the model (which input can we get from which CliMA models, etc.?)
+- Check temporal dependency of model states from previous one (e.g. by shuffling input)
+
+MEETING PLAN: next meeting 16th of June
