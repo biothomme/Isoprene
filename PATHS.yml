@@ -40,6 +40,8 @@ NOTEBOOKS:
       ./notebooks/pinN1_stories/02_methodologies/01_deep_learning_lsm.ipynb
     02_DATASOURCES:
       ./notebooks/pinN1_stories/02_methodologies/02_sources_for_data_on_gpp.ipynb
+    03_CLSOURCES:
+      ./notebooks/pinN1_stories/02_methodologies/03_sources_for_clima_land.ipynb
   # end METHODOLOGIES
   
   TRIALS:

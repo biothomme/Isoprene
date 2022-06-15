@@ -108,6 +108,12 @@ CORE:
           ../notebooks/pinN1_stories/02_methodologies/02_sources_for_data_on_gpp.ipynb
         meta:
           Summaries of datasources that we could use for GPP LSM emulator.
+      
+      03_CLSOURCES:
+        PATH:
+          ../notebooks/pinN1_stories/02_methodologies/03_sources_for_clima_land.ipynb
+        meta:
+          CliMA models and other sources that can be used as input for CliMA Land.
     # end METHODOLOGIES
     
     TRIALS:
