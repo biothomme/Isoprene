@@ -126,13 +126,13 @@ CORE:
   
   EXTERNALS:
     PATH:
-      ./ext_src
+      ../ext_src
     meta:
       Directory with external larger projects, e.g. LSM clones.
     
     01_CLIMA_LAND_V01:
       PATH:
-        ./ext_src/01_julia_land_v01/Land
+        ../ext_src/01_julia_land_v01/Land
       meta:
         Clone of the CliMA land model v0.1.
       WRAPPER:
@@ -142,6 +142,20 @@ CORE:
           Script that wraps the julia land model for its tutorial. Could be used to analyze the application of the model.
     # end 01_CLIMA_LAND_V01
   # end EXTERNALS
+  
+  TUTORIAL:
+    PATH:
+      ../ext_src/02_tutorials
+    meta:
+      Place to store tutorials to gain new skills of methods and skills.
+    
+    01_CLIMACORE:
+      PATH:
+        ../ext_src/02_tutorials/01_climacore/ClimaWorkshops
+      meta:
+        Workshop to understand ClimaCore.jl, the spatial core package all CliMA models are/should be based on.
+  # end TUTORIAL
+  
   CATALOG:
     PATH:
       ../PATHS.yml

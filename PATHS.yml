@@ -60,6 +60,14 @@ EXTERNAL:
       ./ext_src/01_julia_land_v01/Land/clima-land.jl
 # end EXTERNAL
 
+TUTORIAL:
+  ROOT:
+    ./ext_src/02_tutorials
+  01_CLIMACORE:
+    ROOT:
+      ./ext_src/02_tutorials/01_climacore/ClimaWorkshops
+# end TUTORIAL
+
 DOCUMENTATION:
   ROOT:
     ./docs
