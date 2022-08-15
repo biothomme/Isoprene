@@ -208,3 +208,338 @@ TODO:
 - Check temporal dependency of model states from previous one (e.g. by shuffling input)
 
 MEETING PLAN: next meeting 16th of June
+
+
+
+---
+## Meeting 07 <a id="M07"></a>
+#### *23rd June 2022*
+As I was not ready with the tasks on 16th of June, the meeting was skipped.
+
+**Points for discussion:**
+
+Refresh: We are working with the CliMA Land model to simulate GPP by vegetation. This model has many details of the plants physiology. It was time to find out more about the models complexity and data availability.
+
+- Progress last week
+    - Checking temporal dependency of vanilla trial of CliMA Land simulation
+    - Checking negative GPP for biological meaning
+    - Understanding the bigger picture of CliMA models
+    - Investigating data sources for CliMA Land model (preferrably from other CliMA models)
+    - Moved to UPPMAX for computation
+
+1) The vanilla trial is [temporally independent](../../notebooks/pinN1_stories/03_test_models/01_clima_land_vanilla.ipynb#tmc). It could be parallelized but it would make sense to just work with a more complex implementation that is temporally dependent - e.g. $CO_2$ as input and output.
+
+
+2) Biologically, there could be negative NPP, which is the difference between GPP and respiration. Respiration is the active use of higher organic compounds by plants for maintainance/growth metabolism. This could in some situations overcome the carbon fixation by photosynthesis and thus lead to negative NPP. But, what about negative GPP? If one enters the code of CliMA Land, one can see that the values are a result of a negative photosynthesis rate. This is not possible and thus biologically meaningless. We report it as a bug in the specific photosynthesis rates, e.g. [productlimited.jl](https://github.com/CliMA/Land/blob/41f90baa90c5b8e761fdcce5005eebde2f42b26b/src/Photosynthesis/photosynthesis/productlimited.jl) or [rubiscolimited.jl](https://github.com/CliMA/Land/blob/41f90baa90c5b8e761fdcce5005eebde2f42b26b/src/Photosynthesis/photosynthesis/rubiscolimited.jl). 
+
+3) CliMA provides a diverse set of packages that should allow a new earth system modeling framework. Its strength is open access, the soild dynamic and geometric core. On this, several global process models are set. Also the framework involves couplers between process boundaries and libraries for output of different runs. The global process models (usually on grids) base on smaller independent models that can be run on single cells/columns. Another important feature of CliMA is the implementation of solutions with the dogma "calibrate > emulate > sample", which also modular and extendable.
+
+4) The data for the CliMA land model can be used like in the trial (mostly ERA5) or from other CliMA models and thrid party publications. I summarized possibilities in a data table that will be added here after the meeting:
+<details style="background-color:#eeeeee"><summary>Data sources could be:</summary>
+    <table>
+	<thead>
+		<tr>
+			<th>parameter</th>
+			<th>reference</th>
+			<th>CliMA model</th>
+			<th>simulation necessary</th>
+			<th>assumed accessibility</th>
+			<th>alternatives</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Plant variables</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>leaf area index (LAI)</td>
+			<td>yuanReprocessingMODISLeaf2011</td>
+			<td>GriddingMachine.jl</td>
+			<td>no</td>
+			<td>easy</td>
+			<td>GLOBMAP LAI from https://doi.org/10.1029/2012JG002084</td>
+		</tr>
+		<tr>
+			<td>Vcmax</td>
+			<td>smithGlobalPhotosyntheticCapacity2019</td>
+			<td>GriddingMachine.jl</td>
+			<td>no</td>
+			<td>easy</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Chlorophyll</td>
+			<td>croftGlobalDistributionLeaf2020</td>
+			<td>-</td>
+			<td>no</td>
+			<td>medium</td>
+			<td>-</td>
+		</tr>
+		<tr>
+			<td>clumping factor</td>
+			<td>braghiereUnderestimationGlobalPhotosynthesis2019</td>
+			<td>GriddingMachine.jl</td>
+			<td>no</td>
+			<td>easy</td>
+			<td>use other global maps of CI. A review is in fangCanopyClumpingIndex2021</td>
+		</tr>
+		<tr>
+			<td>plant functional type</td>
+			<td></td>
+			<td>GriddingMachine.jl</td>
+			<td>no</td>
+			<td>easy</td>
+			<td>TODO</td>
+		</tr>
+		<tr>
+			<td>Atmospheric parameters</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>atmospheric CO2</td>
+			<td>OCO-2, RCP output</td>
+			<td>-</td>
+			<td>no</td>
+			<td>medium</td>
+			<td>recursive from the output of last time step; ERA5</td>
+		</tr>
+		<tr>
+			<td>wind at 10 m in u (u10)</td>
+			<td>-</td>
+			<td>ClimateMachine.jl/Atmos</td>
+			<td>yes</td>
+			<td>medium</td>
+			<td>ERA5</td>
+		</tr>
+		<tr>
+			<td>wind at 10 m in v (v10)</td>
+			<td>-</td>
+			<td>ClimateMachine.jl/Atmos</td>
+			<td>yes</td>
+			<td>medium</td>
+			<td>ERA5</td>
+		</tr>
+		<tr>
+			<td>sun angles</td>
+			<td>-</td>
+			<td>Insolation.jl</td>
+			<td>yes</td>
+			<td>easy</td>
+			<td>internal implementation</td>
+		</tr>
+		<tr>
+			<td>surface atmosphere pressure</td>
+			<td>-</td>
+			<td>ClimateMachine.jl/Land</td>
+			<td>yes</td>
+			<td>tricky</td>
+			<td>ERA5/GrddingMachine.jl</td>
+		</tr>
+		<tr>
+			<td>wind (from u10 and v10)</td>
+			<td>-</td>
+			<td>ClimateMachine.jl/Atmos</td>
+			<td>yes</td>
+			<td>medium</td>
+			<td>ERA5</td>
+		</tr>
+		<tr>
+			<td>diffuse radiation</td>
+			<td>ERA5</td>
+			<td>-</td>
+			<td>no</td>
+			<td>medium</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>direct radiation</td>
+			<td>ERA5</td>
+			<td>-</td>
+			<td>no</td>
+			<td>medium</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>vapor pressure deficit</td>
+			<td>jiangEstimationSoilEvaporation2019</td>
+			<td>-</td>
+			<td>no</td>
+			<td>medium</td>
+			<td>ERA5</td>
+		</tr>
+		<tr>
+			<td>Soil and surface parameters</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>dew point temperature at 2 m deep (d2m)</td>
+			<td>-</td>
+			<td>ClimateMachine.jl/Land</td>
+			<td>yes</td>
+			<td>tricky</td>
+			<td>ERA5</td>
+		</tr>
+		<tr>
+			<td>temperature at 2 m deep (t2m)</td>
+			<td>-</td>
+			<td>ClimateMachine.jl/Land</td>
+			<td>yes</td>
+			<td>tricky</td>
+			<td>ERA5</td>
+		</tr>
+		<tr>
+			<td>soil evaporation and vegetation transpiration (evavt)</td>
+			<td>jiangEstimationSoilEvaporation2019</td>
+			<td>-</td>
+			<td>no</td>
+			<td>medium</td>
+			<td>ERA5</td>
+		</tr>
+		<tr>
+			<td>mean surface direct short wave radiation flux</td>
+			<td>ERA5</td>
+			<td>-</td>
+			<td>no</td>
+			<td>medium</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>mean surface downward short wave radiation flux</td>
+			<td>ERA5</td>
+			<td>-</td>
+			<td>no</td>
+			<td>medium</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>skin temperature</td>
+			<td>-</td>
+			<td>ClimateMachine.jl/Land</td>
+			<td>yes</td>
+			<td>tricky</td>
+			<td>ERA5/GrddingMachine.jl</td>
+		</tr>
+		<tr>
+			<td>soil temperatures at 4 levels</td>
+			<td>-</td>
+			<td>ClimateMachine.jl/Land</td>
+			<td>yes</td>
+			<td>tricky</td>
+			<td>ERA5/GrddingMachine.jl</td>
+		</tr>
+		<tr>
+			<td>volumetric soil water layer at 4 levels</td>
+			<td>-</td>
+			<td>ClimateMachine.jl/Land</td>
+			<td>yes</td>
+			<td>tricky</td>
+			<td>ERA5/GrddingMachine.jl</td>
+		</tr>
+		<tr>
+			<td>Others</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>float type day of the year</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+		</tr>
+	</tbody>
+</table>
+</details>
+    
+
+5) On cluster now.
+
+
+TODO: Contact the CliMA Land authors and start assembling the dataset.
+
+
+MEETING PLAN: next meeting 7th of July
+
+---
+## Meeting 08 <a id="M08"></a>
+#### *7th July 2022*
+As I was not ready with the tasks on 30th of June, the meeting was skipped.
+
+**Points for discussion:**
+
+Refresh: We are trying to assemble the data for CliMA Land runs.
+
+- Progress last week
+    - Checking how chlorophyl is proxied by remote sensing - radiative transfer of different wavelengths
+    - Building constructor for non-vanilla model
+    - Checked data availability
+    - Checked availability of GPP "ground truth" sites (FLUXNET - eddy cov)
+    - Baaaaaaah, Julia versions on LMOD, conda and CliMA land
+    - Problem with implementing the plant functionl types - vanilla uses default grass but does not seem appropriate. New versions a bit complex... Concerns on CliMA Land are increasing.
+    
+Most of the data [is available](../../notebooks/pinN1_stories/02_methodologies/03_sources_for_clima_land.ipynb) using `GriddingMachine.jl`. The question is - where do we want to run it? Suggestions?
+My idea: 20 flux sites, 20 random places.
+
+Decision: We finally decided to go with the CliMA Land model to develop a protoype for neural operator based emulators on LSMs - regardless of the bugs.
+
+TODO:
+- Get data gridded and model ready
+- Contact authors for meeting about topic
+- Look at the CCAI symposium
+- Ask David about meeting and job
+
+MEETING PLAN: 
+- Is it possible to skip Aug 4th (help field work lapland), Sep 15th, Sep 22nd (both 10 days dhamma))?
+- May have a job from 1st of November
+- Next meeting 14th of July
+
+---
+## Meeting 09 <a id="M09"></a>
+#### *20th July 2022*
+Because of some time event clashes, we postponed the meeting from 14th to 20th of July.
+
+**Points for discussion:**
+
+Refresh: We decided to build a prototype neural operator based emulator on CliMA Land - regardless of some flaws.
+
+- Progress last week
+    - Started to build constructor for [a less vanilla model](../../notebooks/pinN1_stories/03_test_models/02_clima_land_grownup.ipynb)
+    - Downloaded [most of the data](../../notebooks/pinN1_stories/02_methodologies/03_sources_for_clima_land.ipynb) (except of ERA5, which is too large right now)
+    - Implemented [regridding of NetCDF files](../../notebooks/pinN1_stories/02_methodologies/04_regrid_clima_land_data.ipynb) flexible to tile sizes and operations
+
+- Questions:
+    - Why does multithreading not work? Do you have recommedations of good multithreading basic reads/etc.?
+    - How should we grid the dataset?
+    - Do you have suggestions how to write the paper for CCAI symposium?
+
+- Plans for next steps:
+    - Downlaod ERA5 data using `cdsapi`
+    - Regrid the datasets
+    - Refine the model
+    - Write a part of the paper until 29th July of CCAI symposium
+
+The plans seemed to align common interests and we decided to try it on 180°x360° resolution as done in [Wang, Frankenberg, 2022](https://doi.org/10.5194/bg-2022-96).
+
+TODO:
+- Write the paper on [overleaf](https://www.overleaf.com/2512245737rwqrbmsttbfw)
+- Then continue to work on the dataset preparation.
+
+
+
