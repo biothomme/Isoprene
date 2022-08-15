@@ -84,3 +84,13 @@ DOCUMENTATION:
     MEETINGS:
       ./docs/reporting/01_meetings_documentation.md
 # end DOCUMENTATION
+
+SOFTWARE:
+  JULIA:
+    PROJECTS:
+      01_DEFAULT_1_7:
+        ./src/.julia/v1.7
+      02_DEFAULT_1_6:
+        ./src/.julia/v1.6
+  # end JULIA
+# end SOFTWARE

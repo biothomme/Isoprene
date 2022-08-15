@@ -168,4 +168,26 @@ CORE:
     meta:
       This is the most important file, keeping track of all important files that could be imported in any code. YAML-type allows simple importing.
   # end CATALOG
+
+    SOFTWARE:
+      JULIA:
+        PATH: 
+          /sw/comp/julia/1.7.2/rackham/bin/julia
+        meta:
+          Index for julia and its projects, packages, ...
+          
+        PROJECTS:
+          PATH:
+            ../src/.julia
+          meta:
+            Path to julia projects.
+            
+          01_DEFAULT:
+            PATH:
+              ../src/.julia/v1.7
+            meta:
+             Default julia project directory for all CliMA simulations. 
+        # end PATH
+      # end JULIA
+    # end SOFTWARE
 # end
