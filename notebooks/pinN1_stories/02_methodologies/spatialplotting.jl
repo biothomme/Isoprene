@@ -26,16 +26,3 @@ function plot_ncdf(netcdfile::AbstractString;
     xlabel!("longitude")
     ylabel!("latitude")
 end
-
-
-# TODO: move to utils
-"""
-    fillnan(numericarray::AbstractArray{NT})
-
-Fill all `NaN`in numeric Array with zeros of the type of the array and
-return altered array.
-"""
-function fillnan(numericarray::AbstractArray{NT}) where NT<:Number
-    typezero = convert(eltype(numericarray), 0)
-    replace(numericarray, NaN => typezero)
-end
