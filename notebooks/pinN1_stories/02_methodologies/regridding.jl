@@ -4,7 +4,9 @@ const GLAT_MIN, GLAT_MAX = -90., 90.
 const GLON_MIN, GLON_MAX = -180., 180.
 const GIND_MIN, GIND_MAX = 1., 12.
 
-
+##
+# Regridding base classes
+##
 """
     RegridAxis{IT, FT}
 
@@ -202,26 +204,35 @@ function Regridder3D(ncds::NCDatasets.NCDataset; lonname::String="lon",
     Regridder3D(latcard, loncard, indcard; latmin, latmax, lonmin, lonmax, indmin, indmax)
 end
 
+##
+# Regridding functionalities
+##
+"""
+    regrid_data(regridder::RG, ncds::NCDataset,
+        variables::AbstractArray{String}, operation::Function; kwargs...) 
+        where RG<:Regridder
 
-
-
-
-
-
-
-
-###############################
-function regrid_data(regridder::RG, ncds::NCDataset, variables::AbstractArray{String}, operation::Function; kwargs...) where RG<:Regridder
+Regrid data from a given NetCDF dataset `ncds` using a mathematical operation.
+The Regridder `regridder` defines the new dimensions, `variables` the data
+types that should be regridded.
+"""
+function regrid_data(regridder::RG, ncds::NCDataset,
+        variables::AbstractArray{String}, operation::Function;
+        kwargs...) where RG<:Regridder
+    # first we get a fitting regridder from the netcdf dataset
     regridder_ncds = Regridder(ncds; kwargs...)
     ncdims = keys(ncds.dim)
 
+    # we identify the intercals of source and destination netcdf data
     dim_itvs = map(x -> dimwise_intervals(regridder)[x], ncdims)
     dim_itvs_ncds = map(x -> dimwise_intervals(regridder_ncds)[x], ncdims)
-    
+
+    # we initialize a new dataset
     regridded_template = init_regridded(tuple(map(x -> cardinality(regridder)[x], ncdims)...))
     regridded_ncds = Dict(var => deepcopy(regridded_template)
         for var in variables)
 
+    # and regrid the data index for index
     for idx in CartesianIndices(axes(regridded_template))
         idxs = Tuple(idx)
         tile = map(((x,y),) -> x[y], zip(dim_itvs, idxs))
@@ -236,6 +247,15 @@ function regrid_data(regridder::RG, ncds::NCDataset, variables::AbstractArray{St
     regridded_ncds
 end
 
+"""
+    regrid_dataset(filename::String, regridder::RG, ncds::NCDataset,
+        variables::AbstractArray{String}, operation::Function;
+        force::Bool=false, kwargs...) where RG<:Regridder
+
+Regrid NetCDF dataset `ncds` and save as new `filename`. A mathematical
+operation is applied to each datapoint. The Regridder `regridder` defines the
+new dimensions, `variables` the data types that should be regridded.
+"""
 function regrid_dataset(filename::String, regridder::RG, ncds::NCDataset, 
         variables::AbstractArray{String}, operation::Function; force::Bool=false, 
         kwargs...) where RG<:Regridder
@@ -243,13 +263,13 @@ function regrid_dataset(filename::String, regridder::RG, ncds::NCDataset,
     if ispath(filename) 
         !force ? (return) : rm(filename)
     end
-    
+
     # in the first step we regrid the data
     regridded_ncds = regrid_data(regridder, ncds, variables, operation; kwargs...)
 
     # then we instantiate the new NetCDF file.
     new_ncds = NCDataset(filename,"c")
-    
+
     # we run through all dimensions and add them
     ncdims = keys(ncds.dim)
     for ncdim in ncdims
@@ -258,7 +278,7 @@ function regrid_dataset(filename::String, regridder::RG, ncds::NCDataset,
         defVar(new_ncds, ncdim, eltype(dim_levels), tuple(ncdim))
         new_ncds[ncdim][:] = dim_levels
     end
-    
+
     # finally we copy the data
     for var in variables
         defVar(new_ncds, var, eltype(regridded_ncds[var]), tuple(ncdims...))
@@ -266,202 +286,4 @@ function regrid_dataset(filename::String, regridder::RG, ncds::NCDataset,
     end
     new_ncds
 end
-
-###############################
-
-
-
-
-
-
-# UTILS
-"""
-    minmaxdist(pointrange::AbstractArray{FT})
-
-Retrieve the difference between minimum and maximum of a given numeric
-Array (Float).
-"""
-function minmaxdist(pointrange::AbstractArray{FT}) where FT<:AbstractFloat
-    diff([extrema(pointrange)...])[1] /
-        length(pointrange) * (length(pointrange)+1)
-end
-
-
-"""
-    stepsize(pointrange::AbstractArray{FT})
-
-Retrieve the average difference between two points of a numeric array,
-assuming all points are equally distributed between the extrema of it.
-"""
-stepsize(pointrange::AbstractArray{FT}) where FT<:AbstractFloat = (
-    minmaxdist(pointrange)/length(pointrange))
-
-
-"""
-    intsect_intervals(src_itvs::AT, dest_itv::Interval)
-
-Select intervals from a list of `src_itvs` that intersect with a aimed interval
-`dest_itv`.
-"""
-function intsect_intervals(src_itvs::AbstractArray, dest_itv::Interval)
-    # first get width and index for intersecting intervals
-    map(
-        ((j, itv),) -> 
-        let isct = dest_itv ∩ itv
-                isempty(isct) ? nothing : [j, width(isct)/width(itv)]
-        end, 
-        enumerate(src_itvs)) |>
-    # filter the nothings
-    x -> filter(!isnothing, x) |>
-    # adjust the type of the array
-    x -> isempty(x) ? (return nothing) : convert(Array{eltype(x).b}, x) |>
-    x -> reduce(hcat, x)
-end
-
-
-"""
-    extract_cell(ncds::NCDataset, itvs::AbstractArray, itvs_ncds::AbstractArray, variables::AbstractArray{String})
-
-Select cell within NetCDF dataset given intervals `itvs`
-and dimension variables `variables`
-"""
-function extract_cell(ncds::NCDataset, itvs::AbstractArray, itvs_ncds::AbstractArray, variables::AbstractArray{String})
-    map(var -> extract_subarray(ncds[var], itvs_ncds, itvs), variables)
-end
-
-
-"""
-    extract_subarray(data::NCDatasets.CFVariable, 
-        dimension_vectors::AbstractArray, dest_itvs::AbstractArray)
-
-Extract subarray of NetCDF dataset that is stretches over the `dest_itvs`.
-The selected dimensions for the destination `dataset` are defined in 
-`dimension_vectors`.
-"""
-function extract_subarray(data::NCDatasets.CFVariable,
-        dimension_vectors::AbstractArray, dest_itvs::AbstractArray)
-    index_wghts = []
-    for (dim_itvs, dest_itv) in zip(dimension_vectors, dest_itvs)
-        push!(index_wghts, intsect_intervals(dim_itvs, dest_itv))
-    end
-    indices = map(j -> convert(Array{Int}, index_wghts[j][1,:]),
-            1:length(index_wghts))
-    wghts = map(j -> index_wghts[j][2,:], 1:length(index_wghts))
-
-    # the nans of the dataset are converted to zeroes 
-    fillnan(data[indices...]), vectors_product(wghts')
-end
-
-
-"""
-    regrid_cell(ncds::NCDataset, itvs::AbstractArray, itvs_ncds::AbstractArray, 
-            variables::AbstractArray{String}, operation::Function)
-
-Apply an `operation` to regrid cell within NetCDF dataset given intervals `itvs`
-and dimension variables `variables`.
-"""
-function regrid_cell(ncds::NCDataset, itvs::AbstractArray,
-        itvs_ncds::AbstractArray, variables::AbstractArray{String},
-        operation::Function)
-    map(((dt,wt),) -> nm_weighted(dt, wt, operation),
-        extract_cell(ncds, itvs, itvs_ncds, variables))
-end
-
-
-"""
-    fillnan(numericarray::AbstractArray{NT})
-
-Fill all `NaN`in numeric Array with zeros of the type of the array and
-return altered array.
-"""
-function fillnan(numericarray::AbstractArray{NT}) where NT<:Number
-    typezero = convert(eltype(numericarray), 0)
-    replace(numericarray, NaN => typezero)
-end
-
-
-"""
-    init_regridded(ncdims::Tuple; ft::Type{N}=Float64)
-
-Create a zero filled array with `ndims` dimensions to be
-used as a storage for the regridded dataset.
-"""
-function init_regridded(ncdims::Tuple; ft::Type{N}=Float64) where N<:Number
-    zeros(ft, ncdims)
-end
-
-
-"""
-    dimwise_intervals(regridder::RG)
-
-Retrieve arrays of intervals for all axes of a `Regridder`.
-The output is a dictionary that maps axes name to its 
-intervals.
-"""
-function dimwise_intervals(regridder::RG) where RG<:Regridder
-    Dict(x.name => intervals(x) for x in regridder.axes)
-end
-
-
-"""
-    nm_weighted(data::AbstractArray, wghts::AbstractArray, operation)
-
-Apply mathematical array operation to `data` array
-that accounts for respective weights `wghts` of each
-entry inside the array.
-"""
-function nm_weighted(data::AbstractArray{FT}, wghts::AbstractArray{FT}, operation) where FT<:AbstractFloat
-    # to avoid multiple use of marginal extrema, we only use them if more than
-    # 50 % lies within grid cell
-    if operation ∈ [maximum, minimum]
-        let sel_data = data[wghts.>.5]
-            isempty(sel_data) ? 0 : operation(sel_data)
-        end
-    else
-        operation(data.*wghts)/sum(wghts)
-    end
-end
-
-
-"""
-    colrowvector_multiply(vec1, vec2)
-
-Apply multiplication of column (n x 1) and row (1 x m) vector producing
-vec1 * vec2 matrix with (n x m).
-"""
-function colrowvector_multiply(vec1::AbstractArray, vec2::AbstractArray)
-    let z=vec1'*vec2
-        reshape(z, (1, length(z)))
-    end
-end
-
-"""
-    vectors_product(vectorbases::AbstractArray)
-
-Build tensor of `length(vectorbases)` axes byèlementwise multiplication of all
-vectors in `vectorbases` with each other.
-"""
-function vectors_product(vectorbases::AbstractArray)
-    flat_tensor = reduce(colrowvector_multiply, vectorbases)
-    reshape(flat_tensor, (length.(vectorbases)...))
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
