@@ -542,4 +542,33 @@ TODO:
 - Then continue to work on the dataset preparation.
 
 
+---
+## Meeting 10 <a id="M10"></a>
+#### *18th August 2022*
 
+There was COVID, the week of Kiruna that did not happen and some other schedule clashes. Thus, the meeting was postponed for some times.
+
+**Points for discussion:**
+
+Refresh: After working on the Paper for NeurIPS workshop, the coding was taking up again
+
+- Progress last weeks
+    - Paper for NeurIPS
+    - Regridding temporal sets
+    - CDSAPI download of ERA works - resolution 3600 x 1800
+
+1) CliMA land developer answered on Aug 15th - bummer:
+The model is still under construction with many bugs. Hence, Yujie recommended us to not use it.
+
+2) What do we do now?
+We still use CliMA Land to build a LSM emulator. But instead of 360x180 globally we run multiple smaller higher resolution simulations and train emulator spatially on spatial site-level model output to make emulator 2D. We could use American continents as training set, other continents as testing dataset.
+
+3) Paper for NeurIPS
+Can be found here [https://www.overleaf.com/2512245737rwqrbmsttbfw](https://www.overleaf.com/2512245737rwqrbmsttbfw). Should be done until September 13th.
+
+TODO:
+- Visualize the new idea of using multiple high resolution datasets for building 2D emulator.
+- Summarize the dimensions of datasets available in list to plan regridding.
+- Adapt 3D regridding to date-formatted data.
+MEETING PLAN: 
+- Next meeting 25th of August
