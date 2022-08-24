@@ -570,5 +570,6 @@ TODO:
 - Visualize the new idea of using multiple high resolution datasets for building 2D emulator.
 - Summarize the dimensions of datasets available in list to plan regridding.
 - Adapt 3D regridding to date-formatted data.
+
 MEETING PLAN: 
 - Next meeting 25th of August
