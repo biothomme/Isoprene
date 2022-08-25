@@ -573,3 +573,182 @@ TODO:
 
 MEETING PLAN: 
 - Next meeting 25th of August
+
+
+---
+## Meeting 11 <a id="M11"></a>
+#### *??th August 2022*
+
+
+**Points for discussion:**
+
+Refresh: After working on the Paper for NeurIPS workshop, the coding was taking up again
+
+- Progress last weeks
+    - Paper for NeurIPS - Comments?
+    - Summarized plans and data temporal and spatial resolutions
+    - Worked on regridding bugs
+
+1) Paper for NeurIPS - Comments?
+I would like to hear about the comments on the draft midterm paper.
+
+2) Resolution of input features
+<details style="background-color:#eeeeee"><summary>We have following data structures:</a></summary>
+<table>
+    <tr>
+        <td><b>parameter</b></td>
+        <td><b>spatial resolution</b></td>
+        <td><b>temporal range/resolution</b></td>
+        <td><b>tool to fetch</b></td>
+        <td><b>reference</b></td>
+    </tr>
+    <tr>
+        <td>latitude and longitude</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>canopy height</td>
+        <td>0.05°</td>
+        <td>Present / scalar</td>
+        <td>GriddingMachine.jl</td>
+        <td>Simrad 2021</td>
+    </tr>
+    <tr>
+        <td>tree density</td>
+        <td>~0.008°</td>
+        <td>Present / scalar</td>
+        <td>GriddingMachine.jl</td>
+        <td>Crowther, 2015</td>
+    </tr>
+    <tr>
+        <td>plant functional type</td>
+        <td>0.5°</td>
+        <td>Present / scalar</td>
+        <td>GriddingMachine.jl</td>
+        <td>Lawrence&amp;Chase, 2007</td>
+    </tr>
+    <tr>
+        <td>maximum rate of Rubisco carboxylase</td>
+        <td>0.5°</td>
+        <td>Present / scalar</td>
+        <td>GriddingMachine.jl</td>
+        <td>Smith, 2019</td>
+    </tr>
+    <tr>
+        <td>leaf area index</td>
+        <td>0.05°</td>
+        <td>2000-2020 / 8 days</td>
+        <td>GriddingMachine.jl</td>
+        <td>Yuan, 2011</td>
+    </tr>
+    <tr>
+        <td>clumping index</td>
+        <td>0.5°</td>
+        <td>Present / scalar</td>
+        <td>GriddingMachine.jl</td>
+        <td>Braghiere, 2019</td>
+    </tr>
+    <tr>
+        <td>chlorophyl content</td>
+        <td>0.5°</td>
+        <td>Present / scalar</td>
+        <td>GriddingMachine.jl</td>
+        <td>Croft, 2020</td>
+    </tr>
+    <tr>
+        <td>biomass</td>
+        <td>~0.008°</td>
+        <td>Present / scalar</td>
+        <td>GriddingMachine.jl</td>
+        <td>Santoro, 2021+Huang, 2021</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>u and v component of wind (10m)</td>
+        <td>0.1°</td>
+        <td>January 1950 – present / 1 hour</td>
+        <td>CDSAPI.jl</td>
+        <td>Muñoz Sabater, 2019+2021</td>
+    </tr>
+    <tr>
+        <td>soil temperature at 4 layers</td>
+        <td>0.1°</td>
+        <td>January 1950 – present / 1 hour</td>
+        <td>CDSAPI.jl</td>
+        <td>Muñoz Sabater, 2019+2021</td>
+    </tr>
+    <tr>
+        <td>surface direct radiation flux</td>
+        <td>0.1°</td>
+        <td>January 1950 – present / 1 hour</td>
+        <td>CDSAPI.jl</td>
+        <td>Muñoz Sabater, 2019+2021</td>
+    </tr>
+    <tr>
+        <td>atmospheric temperature (2m)</td>
+        <td>0.1°</td>
+        <td>January 1950 – present / 1 hour</td>
+        <td>CDSAPI.jl</td>
+        <td>Muñoz Sabater, 2019+2021</td>
+    </tr>
+    <tr>
+        <td>atmospheric dew point temperature (2m)</td>
+        <td>0.1°</td>
+        <td>January 1950 – present / 1 hour</td>
+        <td>CDSAPI.jl</td>
+        <td>Muñoz Sabater, 2019+2021</td>
+    </tr>
+    <tr>
+        <td>atmospheric pressure (0m)</td>
+        <td>0.1°</td>
+        <td>January 1950 – present / 1 hour</td>
+        <td>CDSAPI.jl</td>
+        <td>Muñoz Sabater, 2019+2021</td>
+    </tr>
+    <tr>
+        <td>volumetric soil water at 4 layers</td>
+        <td>0.1°</td>
+        <td>January 1950 – present / 1 hour</td>
+        <td>CDSAPI.jl</td>
+        <td>Muñoz Sabater, 2019+2021</td>
+    </tr>
+    <tr>
+        <td>surface temperature</td>
+        <td>0.1°</td>
+        <td>January 1950 – present / 1 hour</td>
+        <td>CDSAPI.jl</td>
+        <td>Muñoz Sabater, 2019+2021</td>
+    </tr>
+    <tr>
+        <td>surface downward radiation flux</td>
+        <td>0.1°</td>
+        <td>January 1950 – present / 1 hour</td>
+        <td>CDSAPI.jl</td>
+        <td>Muñoz Sabater, 2019+2021</td>
+    </tr>
+    <tr>
+        <td>vegetation evaporation</td>
+        <td>0.1°</td>
+        <td>January 1950 – present / 1 hour</td>
+        <td>CDSAPI.jl</td>
+        <td>Muñoz Sabater, 2019+2021</td>
+    </tr>
+</table></details>
+
+3) Plan to work with data in training/prediction
+<details style="background-color:#eeeeee"><summary>The dataflow could look like this:</a></summary>
+<img src="./figures/04_dataflow.png"> </img></details>
+
+TODO:
+
+
+MEETING PLAN: 
