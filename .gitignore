@@ -11,3 +11,6 @@ __pycache__
 
 # all figures in the documentation
 docs/*/figures
+
+# saved data from fabiens project
+4linus
