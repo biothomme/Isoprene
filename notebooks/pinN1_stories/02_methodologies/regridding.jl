@@ -1,5 +1,5 @@
-using Dates: DateTime
 using IntervalSets: OpenInterval
+using Dates: value, DateTime
 
 const GLAT_MIN, GLAT_MAX = -90., 90.
 const GLON_MIN, GLON_MAX = -180., 180.
@@ -14,7 +14,7 @@ const GIND_MIN, GIND_MAX = 1., 12.
 Discrete axis that provides minimal and maximal values as well as cardinality
 for regridding axes.
 """
-mutable struct RegridAxis{IT<:Integer, FT<:Union{DateTime,AbstractFloat}}
+mutable struct RegridAxis{IT<:Integer, FT<:AbstractFloat}
     # axis should have a name
     name::String
 
@@ -32,7 +32,7 @@ end
 Create a `RegridAxis` object that recognizes swapped min and max coordinates.
 """
 function RegridAxis(name::String, coordmin::FT, coordmax::FT,
-        coordcard::IT) where {IT<:Integer, FT<:Union{DateTime,AbstractFloat}}
+        coordcard::IT) where {IT<:Integer, FT<:AbstractFloat}
     coords = [coordmin, coordmax]
     RegridAxis{IT, FT}(name, minimum(coords), maximum(coords), coordcard)
 end
@@ -45,7 +45,7 @@ range of points. Maximum, minimum and carinality of the array are
 used as defining characteristics of the `RegridAxis`.
 """
 function RegridAxis(name::String, 
-        pointrange::AbstractArray{FT}) where FT<:Union{DateTime,AbstractFloat}
+        pointrange::AbstractArray{FT}) where FT<:AbstractFloat
     prsz½ = stepsize(pointrange) / 2
     prmin = minimum(pointrange) - prsz½
     prmax = maximum(pointrange) + prsz½
@@ -68,8 +68,7 @@ Base.maximum(rga::RegridAxis) = rga.coordmax - stepsize(rga)/2
 
 # range of all points and interval boarders on the axis
 Base.range(rga::RegridAxis) = minimum(rga):stepsize(rga):maximum(rga)
-function intervals(rga::RegridAxis)
-    println(rga)
+function intervals(rga::RegridAxis) 
     map(ax -> (OpenInterval(ax-stepsize(rga)/2, ax+stepsize(rga)/2)),
         range(rga))
 end
@@ -82,7 +81,7 @@ end
 Abstract type for tools that allow multidimensional regridding based on
 orthogonal RegridAxis{IT, FT}.
 """
-abstract type Regridder
+abstract type Regridder{IT<:Integer, FT<:AbstractFloat}
     # regridding is performed on multiple axes
 end
 
@@ -102,11 +101,27 @@ function Regridder(ncds::NCDatasets.NCDataset; kwargs...)
     end
 end
 
-Base.size(rg::RG) where RG<:Regridder = tuple(map(length, rg.axes)...)
+"""
+     Regridder(axes::Array{RegridAxis{IT, FT}, 1})
+
+Create a Regridder subtype (Regridder2D, Regridder3D) using an array of
+`RegridAxis` instances.
+"""
+function Regridder(axes::Array{RegridAxis{IT, FT}, 1}) where {IT<:Integer, FT<:AbstractFloat}
+    let ndim = length(axes)
+        if ndim == 2
+            Regridder2D(axes)
+        elseif ndim == 3
+            Regridder3D(axes)
+        end
+    end
+end
+
+Base.size(rg::RG) where RG<:Regridder = tuple(map(length, values(rg.axes))...)
 cardinality(rg::RG) where RG<:Regridder = Dict(ax.name => length(ax) for ax
-        in rg.axes)
+        in values(rg.axes))
 ranges(rg::RG) where RG<:Regridder = Dict(ax.name => range(ax) for ax
-        in rg.axes)
+        in values(rg.axes))
 
 
 # Regridder2D - for lat+lon
@@ -116,8 +131,8 @@ ranges(rg::RG) where RG<:Regridder = Dict(ax.name => range(ax) for ax
 Tool that allow 2 dimensional regridding based on orthogonal
 RegridAxis{IT, FT}. As default axes are assumed to be latitude and longitude.
 """
-mutable struct Regridder2D <: Regridder
-    axes::Array
+mutable struct Regridder2D{IT<:Integer, FT<:AbstractFloat} <: Regridder{IT, FT}
+    axes::Array{RegridAxis{IT, FT}, 1}
 end
 
 """
@@ -129,12 +144,12 @@ as cardinality for regridding.
 """
 function Regridder2D(latcard::IT, loncard::IT; latmin::FT=GLAT_MIN,
         latmax::FT=GLAT_MAX, latname::String="lat", lonmin::FT=GLON_MIN,
-        lonmax::FT=GLON_MAX, lonname::String="lon") where {IT<:Integer, FT<:Union{DateTime,AbstractFloat}}
+        lonmax::FT=GLON_MAX, lonname::String="lon") where {IT<:Integer, FT<:AbstractFloat}
     # regridding needs min, max of longitude and latitude
-     axes = [
-        RegridAxis("lat", latmin, latmax, latcard),
-        RegridAxis("lon", lonmin, lonmax, loncard)
-    ]
+     axes = Dict(
+        "lat" => RegridAxis(latname, latmin, latmax, latcard),
+        "lon" => RegridAxis(lonname, lonmin, lonmax, loncard)
+    )
     Regridder2D(axes)
 end
 
@@ -152,8 +167,7 @@ function Regridder2D(ncds::NCDatasets.NCDataset; lonname::String="lon",
     latmin, latmax = extrema(ncds[latname])
     lonmin, lonmax = extrema(ncds[lonname])
 
-    Regridder2D(latcard, loncard; latmin, latmax, latname, lonmin, lonmax,
-        lonname)
+    Regridder2D(latcard, loncard; latmin, latmax, latname, lonmin, lonmax, lonname)
 end
 
 
@@ -165,28 +179,27 @@ Tool that allow 3 dimensional regridding based on orthogonal
 RegridAxis{IT, FT}. As default axes are assumed to be latitude, longitude and
 cycle index.
 """
-mutable struct Regridder3D <: Regridder
-    axes::Array
+mutable struct Regridder3D{IT<:Integer, FT<:AbstractFloat} <: Regridder{IT, FT}
+    axes::Dict{String, RegridAxis{IT, FT}}
 end
 
 """
     Regridder3D{IT, FT}(latmin::FT, latmax::FT indcard::FT; lonmin::FT, lonmax::FT,
         latcard::IT, loncard::IT, indmin::IT, indmax::IT)
 
-Create a Regridder3D object from latitude, logitude and cycle index minima and maxima
+Create a Regridder3Dis object from latitude, logitude and cycle index minima and maxima
 as well as cardinality for regridding.
 """
 function Regridder3D(latcard::IT, loncard::IT, indcard::IT; latmin::FT=GLAT_MIN,
         latmax::FT=GLAT_MAX, latname::String="lat", lonmin::FT=GLON_MIN,
-        lonmax::FT=GLON_MAX, lonname::String="lon", indmax::DT=GIND_MAX,
-        indmin::DT=GIND_MIN, indname::String="ind") where {IT<:Integer,
-        FT<:Union{DateTime,AbstractFloat}, DT<:Union{DateTime,AbstractFloat}}
+        lonmax::FT=GLON_MAX, lonname::String="lon", indmax::FT=GIND_MAX,
+        indmin::FT=GIND_MIN, indname::String="ind") where {IT<:Integer, FT<:AbstractFloat}
     # regridding needs min, max of longitude and latitude
-     axes = [
-        RegridAxis(latname, latmin, latmax, latcard),
-        RegridAxis(lonname, lonmin, lonmax, loncard),
-        RegridAxis(indname, indmin, indmax, indcard)
-    ]
+     axes = Dict(
+        "lat" => RegridAxis(latname, latmin, latmax, latcard),
+        "lon" => RegridAxis(lonname, lonmin, lonmax, loncard),
+        "ind" => RegridAxis(indname, indmin, indmax, indcard)
+    )
     Regridder3D(axes)
 end
 
@@ -200,11 +213,20 @@ and cycle index are `lon`, `lat` and `ind`.
 """
 function Regridder3D(ncds::NCDatasets.NCDataset; lonname::String="lon",
         latname::String="lat", indname::String="ind")
-    latcard, loncard, indcard = (x -> length(ncds[x])).([latname, lonname, indname])
+    latcard, loncard, indcard = (x -> length(ncds[x])).(
+        [latname, lonname, indname])
 
     latmin, latmax = extrema(ncds[latname])
     lonmin, lonmax = extrema(ncds[lonname])
-    indmin, indmax = eltype(ncds[indname]) == DateTime ? extrema(ncds[indname]) : promote(extrema(ncds[indname])..., lonmin)[1:2]
+
+    # here we need conversion of datetime typed dates
+    if eltype(ncds[indname][:]) == DateTime
+        indextrema = map(x -> value(x)-value(minimum(ncds[indname])),
+            extrema(ncds[indname]))
+    else
+        indextrema = extrema(ncds[indname])
+    end
+    indmin, indmax = promote(indextrema..., lonmin)[1:2]
 
     Regridder3D(latcard, loncard, indcard; latmin, latmax, latname, lonmin,
         lonmax, lonname, indmin, indmax, indname)
