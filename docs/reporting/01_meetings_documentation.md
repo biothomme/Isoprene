@@ -587,7 +587,8 @@ Refresh: After working on the Paper for NeurIPS workshop, the coding was taking 
 - Progress last weeks
     - Paper for NeurIPS - Comments?
     - Summarized plans and data temporal and spatial resolutions
-    - Worked on regridding bugs
+    - Worked on regridding bugs; switched to python
+    - Worked on random sampling for subareas
 
 1) Paper for NeurIPS - Comments?
 I would like to hear about the comments on the draft midterm paper.
@@ -747,6 +748,11 @@ I would like to hear about the comments on the draft midterm paper.
 3) Plan to work with data in training/prediction
 <details style="background-color:#eeeeee"><summary>The dataflow could look like this:</a></summary>
 <img src="./figures/04_dataflow.png"> </img></details>
+
+
+4) Regridding now in python - interpolation made it neccessary. But it works well; we need to decide which method to use.
+
+5) Tried to find method for random non-overlapping selection of subareas. In addition to the spatial dimensions we have multiple years due to ERA5 ddata.
 
 TODO:
 
