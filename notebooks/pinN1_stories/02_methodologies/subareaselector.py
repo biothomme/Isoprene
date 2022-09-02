@@ -1,7 +1,11 @@
 # package imports
 from typing import Any
+import arrow
+import csv
+from datetime import date, timedelta
 import geoviews as gv
 import numpy as np
+import os
 import xarray as xr
 
 # local imports
@@ -120,3 +124,52 @@ class SubAreaSelector:
                                 value_frame=np.max(self.data))
         return gv.output(fig)
         
+    def to_csv(self, file_out, force=False):
+        if os.path.exists(file_out) and not force : return
+        writer_csv = None
+        for dict_sa in map(lambda x : x.to_dict(), self.subareas):
+            if writer_csv is None:
+                writer_csv = csv.DictWriter(
+                    open(file_out, "w"), fieldnames=dict_sa.keys())
+                writer_csv.writeheader()
+            writer_csv.writerow(dict_sa)
+        return
+            
+        
+        
+class TemporalSubAreaSelector(SubAreaSelector):
+    def __init__(self, array_data: xr.DataArray, dict_dimcard: dict,
+                 date_start:str, date_end:str, time_step:timedelta,
+                 ratio_nonan: float=0.5) -> None:
+        super().__init__(array_data, dict_dimcard, ratio_nonan)
+        
+        self.sa_temp = []
+        
+        self.start = arrow.get(date_start)
+        self.end = arrow.get(date_end)
+        self.step = time_step
+        
+    def draw_subareas(self, time_nooverlap:timedelta) -> dict:
+        n_nooverlap = time_nooverlap.total_seconds() / self.step.total_seconds()
+        time_current = self.start
+        while time_current <= self.end:
+            # if enough time passed we remove elemtents from list that should
+            # not spatially overlap
+            if len(self.sa_temp) > n_nooverlap:
+                self.sa_temp.pop(0)
+            
+            # we look for a subarea
+            subarea = None
+            while subarea is None:
+                sa = self.draw_subarea()
+                if all(map(sa.check_overlap, self.sa_temp)):
+                    subarea = sa
+                
+            
+            print(f"We have {len(self.subareas)} subareas.")
+            # each subarea we find, we step forward in time...
+            subarea.set_time(time_current)
+            self.sa_temp.append(subarea)
+            self.subareas.append(subarea)
+            time_current += self.step
+        return self.subareas
