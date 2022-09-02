@@ -49,3 +49,20 @@ class SubArea:
             area_framed.loc[arrays_dim] = value_frame
         return area_framed
         
+    def set_time(self, time_point) -> None:
+        self.time = time_point
+        return
+    
+    def to_dict(self):
+        dict_sa = {"fraction_nonnan": self.check_nonnan_ratio().values.item()}
+        
+        if hasattr(self, "time"):
+            dict_sa["time"] = self.time.format("YYYY-MM-DD HH:mm:ss ZZ")
+        
+        for dim in self.area.dims:
+            dict_sa[f"{dim}_min"] = min(self.area[dim].values)
+            dict_sa[f"{dim}_max"] = max(self.area[dim].values)
+            dict_sa[f"{dim}_center"] = self.point[dim].values.item()
+            dict_sa[f"{dim}_card"] = len(self.area[dim].values)
+            
+        return dict_sa
