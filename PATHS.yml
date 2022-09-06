@@ -14,6 +14,35 @@ DATA:
 CODE:
   ROOT:
     ./src
+  
+  METHODOLOGIES:
+    ROOT:
+      ./src/02_methodologies
+    JULIA:
+      CDS_FETCHER:
+        ./src/02_methodologies/cdsfetcher.jl
+      REGRIDDER:
+        ./src/02_methodologies/regridder.jl
+      SPATIALPLOT:
+        ./src/02_methodologies/spatialplotting.jl
+      UTILS_NETCDF:
+        ./src/02_methodologies/utils_netcdf.jl
+    
+    PYTHON:
+      SUBAREA:
+        ./src/02_methodologies/subarea.py
+      SUBAREASELECTOR:
+        ./src/02_methodologies/subareaselector.py
+      UTILS_SUBAREASELECTION:
+        ./src/02_methodologies/utils_subareaselection.py
+  # end METHODOLOGIES
+
+  SCRIPTS:
+    ROOT:
+      ./src/scripts
+    SLURM:
+      ./src/scripts/slurm
+  # end SCRIPTS
 # end CODE
 
 NOTEBOOKS:
@@ -42,6 +71,14 @@ NOTEBOOKS:
       ./notebooks/pinN1_stories/02_methodologies/02_sources_for_data_on_gpp.ipynb
     03_CLSOURCES:
       ./notebooks/pinN1_stories/02_methodologies/03_sources_for_clima_land.ipynb
+    04_REGRID_JULIA:
+      ./notebooks/pinN1_stories/02_methodologies/04_regrid_clima_land_data.ipynb
+    05_DOWNLOAD_CDS:
+      ./notebooks/pinN1_stories/02_methodologies/05_download_cds_data.ipynb
+    06_REGRID_PYTHON:
+      ./notebooks/pinN1_stories/02_methodologies/06_regridding_in_python.ipynb
+    07_SELECT_SUBAREAS:
+      ./notebooks/pinN1_stories/02_methodologies/07_select_vegcovered_subareas.ipynb
   # end METHODOLOGIES
   
   TRIALS:
@@ -49,6 +86,8 @@ NOTEBOOKS:
       ./notebooks/pinN1_stories/03_test_models
     01_CLIMA_LAND_VANILLA:
       ./notebooks/pinN1_stories/03_test_models/01_clima_land_vanilla.ipynb
+    02_CLIMA_LAND_MODEL:
+      ./notebooks/pinN1_stories/03_test_models/02_clima_land_grownup.ipynb
   # end TRIALS
 # end NOTEBOOKS
 
@@ -60,6 +99,12 @@ EXTERNAL:
       ./ext_src/01_julia_land_v01/Land
     WRAPPER:
       ./ext_src/01_julia_land_v01/Land/clima-land.jl
+  
+  SLURMSUBMITTER:
+    ROOT:
+      ./island_in_the_sun/projects/beta-Cyclocitral/uppmax_scripts
+    UPPMAXSCRIPT:
+      ./island_in_the_sun/projects/beta-Cyclocitral/uppmax_scripts/uppmax_script_class.py
 # end EXTERNAL
 
 TUTORIAL:
