@@ -31,7 +31,7 @@ class SubArea:
     def plot(self, palette="magma", verbose=True, value_frame=None, **kwargs):
         gvds = gv.Dataset(self.frame_area(value_frame))
 
-        gvimage = gvds.to(gv.Image, ['lon', 'lat'], 'data')
+        gvimage = gvds.to(gv.Image, list(self.area.dims).sort(reverse=False), self.area.name)
 
         if verbose : fig = gvimage.opts(cmap=palette, **kwargs)
         else : fig = gv.output(gvimage.opts(cmap=palette, **kwargs))

@@ -57,9 +57,9 @@ class SubAreaSelector:
     
     def get_length_edges(self) -> None:
         self.edges = {
-            dm: np.subtract(
+            dm: np.abs(np.subtract(
                     *self.data[dm].values[[self.card[dm], 0]]
-            ) for dm in self.dims
+            )) for dm in self.dims
         }
         return
 
@@ -79,9 +79,15 @@ class SubAreaSelector:
         subarea = SubArea(point, self.data, self.edges)
         if apply_nan_thresh and subarea.check_nonnan_ratio() < self.rnn:
             return self.draw_subarea()
+        
+        # sometimes the subareas are not fitting the expected cardinalities
+        for dim in subarea.area.dims:
+            if len(subarea.area[dim].values) != self.card[dim]:
+                return self.draw_subarea()
         return subarea
     
-    def draw_subareas(self, n_redraw=10000, n_prune=5, n_subareas=100) -> list:
+    def draw_subareas(self, n_redraw=10000, n_prune=5, n_subareas=100,
+                      file_csv=None, **kwargs) -> list:
         while len(self.subareas) < n_subareas:
             count_redraw = 0
             subarea = None
@@ -93,7 +99,10 @@ class SubAreaSelector:
                 
             print(f"We have {len(self.subareas)} subareas.")
             if subarea is None : self.prune_subareas(n_prune)
-            else : self.subareas.append(subarea)
+            else:
+                self.subareas.append(subarea)
+                if file_csv is not None:
+                    self.to_csv(file_csv, subarea=subarea, **kwargs)
         return self.subareas
     
     def prune_subareas(self, n_prune) -> None:
@@ -105,7 +114,7 @@ class SubAreaSelector:
     def plot(self, palette="magma", verbose=False) -> Any:
         gvds = gv.Dataset(self.data)
 
-        gvimage = gvds.to(gv.Image, ['lon', 'lat'], 'data')
+        gvimage = gvds.to(gv.Image, list(self.dims).sort(reverse=True), self.data.name)
 
         fig_dims = {"height": 800, "width": 1200}
         if verbose:
@@ -123,16 +132,40 @@ class SubAreaSelector:
             fig *= subarea.plot(palette=palette_subareas, verbose=True,
                                 value_frame=np.max(self.data))
         return gv.output(fig)
-        
-    def to_csv(self, file_out, force=False):
-        if os.path.exists(file_out) and not force : return
-        writer_csv = None
-        for dict_sa in map(lambda x : x.to_dict(), self.subareas):
-            if writer_csv is None:
-                writer_csv = csv.DictWriter(
-                    open(file_out, "w"), fieldnames=dict_sa.keys())
-                writer_csv.writeheader()
-            writer_csv.writerow(dict_sa)
+
+
+    def to_csv(self, file_out, subarea=None, force=False, append=True):
+        if os.path.exists(file_out) and not force and not (
+            append and subarea is None) : return
+
+        # we store the filename to allow continuous writing
+        if not hasattr(self, "csv"):
+            self.csv = file_out
+            self.handle = open(self.csv, "w" if (force or not append) else "a")
+
+        if not hasattr(self, "writer"):
+            self.writer = None
+
+        if self.csv != file_out and self.writer is not None:
+            self.csv = file_out
+            self.handle = open(self.csv, "w" if (force or not append) else "a")
+
+
+        if subarea is None:
+            for dict_sa in map(lambda x : x.to_dict(), self.subareas):
+                if self.writer is None:
+                    self.writer = csv.DictWriter(
+                        self.handle, fieldnames=dict_sa.keys())
+                    self.writer.writeheader()
+                self.writer.writerow(dict_sa)
+        else:
+            dict_sa = subarea.to_dict()
+            if self.writer is None or self.csv != file_out:
+                self.writer = csv.DictWriter(
+                    self.handle, fieldnames=dict_sa.keys())
+                self.writer.writeheader()
+            self.writer.writerow(dict_sa)
+            self.handle.flush()
         return
             
         
@@ -149,9 +182,10 @@ class TemporalSubAreaSelector(SubAreaSelector):
         self.end = arrow.get(date_end)
         self.step = time_step
         
-    def draw_subareas(self, time_nooverlap:timedelta) -> dict:
+    def draw_subareas(self, time_nooverlap:timedelta, file_csv=None, **kwargs) -> dict:
         n_nooverlap = time_nooverlap.total_seconds() / self.step.total_seconds()
         time_current = self.start
+        c = 1
         while time_current <= self.end:
             # if enough time passed we remove elemtents from list that should
             # not spatially overlap
@@ -166,10 +200,13 @@ class TemporalSubAreaSelector(SubAreaSelector):
                     subarea = sa
                 
             
-            print(f"We have {len(self.subareas)} subareas.")
+            print(f"We have {c} subareas.")
             # each subarea we find, we step forward in time...
             subarea.set_time(time_current)
             self.sa_temp.append(subarea)
-            self.subareas.append(subarea)
+            if file_csv is not None:
+                self.to_csv(file_csv, subarea=subarea, **kwargs)
+            else : self.subareas.append(subarea)
             time_current += self.step
+            c += 1
         return self.subareas
