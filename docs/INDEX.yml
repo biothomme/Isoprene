@@ -17,11 +17,78 @@ CORE:
         ../src/01_model_exploration
       meta:
         Directory for code/classes that are/could be used in 01_model_exploration notebooks.
+    # end MODEL_EXPLORATION
+
+    METHODOLOGIES:
+      PATH:
+        ../src/02_methodologies
+      meta:
+        Code for method exploration, regridding, data download, data organization etc.
+
+      JULIA:
+        CDS_FETCHER:
+          PATH:
+            ../src/02_methodologies/cdsfetcher.jl
+          meta:
+            For downloading CDS data (e.g. ERA5 hourly) given query data (here froma csv file).
+        
+        REGRIDDER:
+          PATH:
+            ../src/02_methodologies/regridder.jl
+          meta:
+            Classes and functions for regridding finegridded to more coarsely gridded NetCDF files.
+
+        SPATIALPLOT:
+          PATH:
+            ../src/02_methodologies/spatialplotting.jl
+          meta:
+            Functions for comparing/plotting NetCDF files.
+        
+        UTILS_NETCDF:
+          PATH:
+            ./src/02_methodologies/utils_netcdf.jl
+          meta:
+            Utilities for regridding, organizing and plotting of NetCDF files.
+      
+      PYTHON:
+        SUBAREA:
+          PATH:
+            ../src/02_methodologies/subarea.py
+          meta:
+            Class for a SubArea from a global xarray/NetCDF dataset that can select for NaNs.
+          
+        SUBAREASELECTOR:
+          PATH:
+            ../src/02_methodologies/subareaselector.py
+          meta:
+            Classes to select Subareas requiring a threshold of non-NaN values and non overlaps.
+      
+        UTILS_SUBAREASELECTION:
+          PATH:
+            ../src/02_methodologies/utils_subareaselection.py
+          meta:
+            Functionalities for subarea selection.
+    # end METHODOLOGIES
+
     TRIALS:
       PATH:
         ../src/03_test_models
       meta:
         Directory for code/classes that are/could be used in 03_test_models notebooks.
+    # end TRIALS
+  
+    SCRIPTS:
+      PATH:
+        ../src/scripts
+      meta:
+        Directory for "non-sustainable" simple run-scripts seperated into SLURM, python or julia.
+      
+      SLURM:
+        PATH:
+          ../src/scripts/slurm
+        meta:
+          Collection of SLURM scripts
+    # end SCRIPTS
   # end CODE
 
   DOCUMENTATION:
@@ -41,7 +108,8 @@ CORE:
           ./docs/presentations/01_literature_review
         meta:
           First pesentation to introduce LSMs in our meetings.
-      # end PRESENTATION
+    # end PRESENTATION
+    
     REPORTING:
       PATH:
         ../docs/reporting
@@ -114,6 +182,30 @@ CORE:
           ../notebooks/pinN1_stories/02_methodologies/03_sources_for_clima_land.ipynb
         meta:
           CliMA models and other sources that can be used as input for CliMA Land.
+
+      04_REGRID_JULIA:
+        PATH:
+          ../notebooks/pinN1_stories/02_methodologies/04_regrid_clima_land_data.ipynb
+        meta:
+          Regridding trial datasets using self implementef regridder in Julia.
+      
+      05_DOWNLOAD_CDS:
+        PATH:
+        ../notebooks/pinN1_stories/02_methodologies/05_download_cds_data.ipynb
+        meta:
+          Downloading ERA5 data using the CDS API.
+      
+      06_REGRID_PYTHON:
+        PATH:
+          ./notebooks/pinN1_stories/02_methodologies/06_regridding_in_python.ipynb
+        meta:
+          Regridding and plotting NetCDF files in python unsing xarray and xESMF.
+
+      07_SELECT_SUBAREAS:
+        PATH:
+          ./notebooks/pinN1_stories/02_methodologies/07_select_vegcovered_subareas.ipynb
+        meta:
+          Selecting subareas (64x64 > 70% vegetation-covered cells with 0.1°x0.1° resolution) for timepoints between 2015 and 2020 with no global overlap for +/- 48 hours.
     # end METHODOLOGIES
     
     TRIALS:
@@ -127,6 +219,12 @@ CORE:
           ../notebooks/pinN1_stories/03_test_models/01_clima_land_vanilla.ipynb
         meta:
           First try to understand and run the CliMA land v0.1 model. Simple parameter exchange; performed in Julia.
+
+       02_CLIMA_LAND_MODEL:
+          PATH:
+            ../notebooks/pinN1_stories/03_test_models/02_clima_land_grownup.ipynb
+          meta:
+            Assembling CliMA Land model that is used as template for emulation.
     # end TRIALS
   # end NOTEBOOKS
   
@@ -147,6 +245,19 @@ CORE:
         meta:
           Script that wraps the julia land model for its tutorial. Could be used to analyze the application of the model.
     # end 01_CLIMA_LAND_V01
+
+    SLURMSUBMITTER:
+      PATH:
+        ../island_in_the_sun/projects/beta-Cyclocitral/uppmax_scripts
+      meta:
+        Elegant way to submit and buid SLURM scripts on UPPMAX.
+      
+      UPPMAXSCRIPT:
+        PATH:
+          ../island_in_the_sun/projects/beta-Cyclocitral/uppmax_scripts/uppmax_script_class.py
+        meta:
+          Main Class for uppmax slurm script construction.
+    # end SLURMSUBMITTER
   # end EXTERNALS
   
   TUTORIAL:
@@ -169,25 +280,37 @@ CORE:
       This is the most important file, keeping track of all important files that could be imported in any code. YAML-type allows simple importing.
   # end CATALOG
 
-    SOFTWARE:
-      JULIA:
-        PATH: 
-          /sw/comp/julia/1.7.2/rackham/bin/julia
+  SOFTWARE:
+    JULIA:
+      PATH: 
+        /sw/comp/julia/1.7.2/rackham/bin/julia
+      meta:
+        Index for julia and its projects, packages, ...
+        
+      PROJECTS:
+        PATH:
+          ../src/.julia
         meta:
-          Index for julia and its projects, packages, ...
+          Path to julia projects.
           
-        PROJECTS:
+        01_DEFAULT:
           PATH:
-            ../src/.julia
+            ../src/.julia/v1.7
           meta:
-            Path to julia projects.
-            
-          01_DEFAULT:
-            PATH:
-              ../src/.julia/v1.7
-            meta:
-             Default julia project directory for all CliMA simulations. 
-        # end PATH
-      # end JULIA
-    # end SOFTWARE
+            Default julia project directory for all CliMA simulations.
+        
+        02_REGRID:
+          PATH:
+            ../src/.julia/v1.6_regrid
+          meta:
+            Julia project for regridding and NetCDF plotting. v1.6 to have no issues with NetCDF package.
+        
+        03_CLIMA_LAND:
+          PATH:
+            ../ext_src/01_julia_land_v01/Land
+          meta:
+            Project for the run of CliMA vanilla model.
+      # end PROJECTS
+    # end JULIA
+  # end SOFTWARE
 # end
