@@ -34,7 +34,7 @@ CORE:
         
         REGRIDDER:
           PATH:
-            ../src/02_methodologies/regridder.jl
+            ../src/02_methodologies/regridding.jl
           meta:
             Classes and functions for regridding finegridded to more coarsely gridded NetCDF files.
 

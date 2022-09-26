@@ -577,7 +577,7 @@ MEETING PLAN:
 
 ---
 ## Meeting 11 <a id="M11"></a>
-#### *??th August 2022*
+#### *1st September 2022*
 
 
 **Points for discussion:**
@@ -755,6 +755,26 @@ I would like to hear about the comments on the draft midterm paper.
 5) Tried to find method for random non-overlapping selection of subareas. In addition to the spatial dimensions we have multiple years due to ERA5 ddata.
 
 TODO:
+- Select the subareas (64x64 pixels)
+- Download ERA5 from last 5 years.
+
+MEETING PLAN: business as usual.
+
+---
+## Meeting 12 <a id="M11"></a>
+#### *8th August 2022*
 
 
-MEETING PLAN: 
+**Points for discussion:**
+
+Refresh: After working on the Paper for NeurIPS workshop, the coding was taking up again
+
+- Organisational:
+     1) no meetings next two weeks
+     2) paper submission on monday?
+     3) set date for "official" presentation (master needs to have grade until end November).
+
+- Progress last weeks
+    - Selected [subareas](../../cache/02_features/2022_09_subareas_5y_48hnoo.csv) using vegetation covered land area (from ERA5).
+    - Tidied up
+    - Tried CDS fetching in Julia - not efficient; will move to python

@@ -22,7 +22,7 @@ CODE:
       CDS_FETCHER:
         ./src/02_methodologies/cdsfetcher.jl
       REGRIDDER:
-        ./src/02_methodologies/regridder.jl
+        ./src/02_methodologies/regridding.jl
       SPATIALPLOT:
         ./src/02_methodologies/spatialplotting.jl
       UTILS_NETCDF:
