@@ -3,6 +3,9 @@ cache
 
 # external packages
 ext_src
+.julia
+.singularity
+conda
 
 # artefacts of computer
 *DS_Store
@@ -11,6 +14,9 @@ __pycache__
 
 # all figures in the documentation
 docs/*/figures
+
+# temporary stuff
+tmp
 
 # saved data from fabiens project
 island_in_the_sun
