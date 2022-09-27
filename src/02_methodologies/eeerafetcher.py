@@ -29,6 +29,14 @@ class EEERA5Fetcher:
         return
     
     def get_data(self, **kwargs_filter):
+        """get_data
+        
+        Filter and load ImageCollection.
+
+        Returns:
+            imgcoll: filtered ImageCollection
+        """        
+    
         imgcoll = self.imgcoll
         
         # avoid mistakes in cases
@@ -41,3 +49,6 @@ class EEERA5Fetcher:
         
         imgcoll = reduce(lambda x, y: x.filter(y), kwargs_filter.values(), imgcoll)
         return imgcoll
+    
+# This class was depreceated as not useful - ERA5 collection at EE has lower
+# resolution than the CDS.
