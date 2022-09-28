@@ -1,3 +1,6 @@
+using CSV
+using CDSAPI
+
 Base.@kwdef mutable struct CDSFetcher
     variables = [
         "10m_u_component_of_wind",
@@ -61,10 +64,11 @@ function fetch(cdsf::CDSFetcher, directory::String)
 
     println(req, filename(cdsf, directory))
     # run the request
-    #CDSAPI.retrieve(
-    #    "reanalysis-era5-land",
-    #    CDSAPI.py2ju(req, filename(cdsf, directory))
-    #)
+    CDSAPI.retrieve(
+        "reanalysis-era5-land",
+        CDSAPI.py2ju(req),
+        filename(cdsf, directory)
+    );
 end
 
 function filename(cdsf::CDSFetcher, directory::String)
@@ -84,7 +88,7 @@ function parse_date(string_date::String)
 end
 
 function CDSFetcher(string_date::String, latmin::String, latmax::String,
-        lonmin::string, lonmax::String)
+        lonmin::String, lonmax::String)
     dict_date = parse_date(string_date)
     CDSFetcher(
         year=dict_date["year"],
@@ -98,14 +102,15 @@ function CDSFetcher(string_date::String, latmin::String, latmax::String,
 end
 
 function fetch_csv(file_csv::String, directory::String)
-    csv = CSV.File(open(file_csv, "r"))
+    csv = CSV.File(open(file_csv, "r"),
+        typemap=Dict(Int => String, AbstractFloat => String))
     for row in csv
         cdsf = CDSFetcher(
-            row["time"],
-            row["latitude_min"],
-            row["latitude_max"],
-            row["longitude_min"],
-            row["longitude_max"])
+            row[Symbol("time")],
+            row[Symbol("latitude_min")],
+            row[Symbol("latitude_max")],
+            row[Symbol("longitude_min")],
+            row[Symbol("longitude_max")])
         fetch(cdsf, directory)
     end
 end
