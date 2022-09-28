@@ -1,32 +1,55 @@
 # Here one can find a class to fetch ERA5 data from CDS using CDS-API
 import cdsapi
 
+from cdsapiclient import ClientMultiRequest
+from subareacsv import SubareaCSV
+from utils_cdsapi import make_name_outfile
+
 class CDSAPIFetcher:
-    def __init__(self, collection="reanalysis-era5-land"):
+    def __init__(self, collection="reanalysis-era5-land",
+                 wait_until_complete=True):
         # initialize cds api client
-        self._initialize()
+        self._initialize(wait_until_complete)
         
         # and store the collection key
         self.name_coll = collection
         return
     
-    def _initialize(self):
+    def _initialize(self, wait_until_complete):
         """_initialize
 
         Set up CDS API client for downloads.
         """        
-        self.client = cdsapi.Client()
+        self.client = ClientMultiRequest(wait_until_complete=True)
+        return
     
-    def get_data(self, name_file, **kwargs_filter):
-        self.client.retrieve(
-            self.name_coll,
-            kwargs_filter,
-            name_file
-        )
-    
-    def assemble_request(self, day, month, year, format="netcdf", variables=[],
-                         times=[], area=[90, -180, -90, 180], **kwargs):
+    def get_data(self, name_csvfile, dict_processlog={}, directory=""):
+        # we wrap the csv file and iterate through all rows/requests
+        sac = SubareaCSV(name_csvfile)
+        for row in sac:
+            # we make a unique name
+            name_file = make_name_outfile(directory, row)
+            # we avoid multiple requests
+            if name_file in dict_processlog.keys() : continue
+            
+            # make the request
+            request = self.assemble_request(**row)
+            
+            # submit it and wait
+            result = self.client._api("%s/resources/%s" % (
+                self.client.url, self.name_coll), request, "POST")
+            
+            # download it
+            result.download(target=name_file)
+            
+            # document the fetch
+            dict_processlog[name_file] = result.reply
+        return dict_processlog
 
+
+    def assemble_request(self, day=None, month=None, year=None, format="netcdf",
+                         variables=[], time=[], area=[90, -180, -90, 180],
+                         **kwargs):
         """assemble_request
 
         Assemble a dictionary reflecting a CDS API request for one day.
@@ -89,8 +112,8 @@ class CDSAPIFetcher:
         else : dict_request["variable"] = variables
         
         # for time, every hour is default
-        if len(times) == 0 : dict_request["time"] = TIME_DFLT
-        else : dict_request["time"] = times
+        if len(time) == 0 : dict_request["time"] = TIME_DFLT
+        else : dict_request["time"] = time
         
         return dict_request
 # end CDSAPIFetcher
