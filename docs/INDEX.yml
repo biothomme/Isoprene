@@ -4,6 +4,36 @@ CORE:
       ../cache
     meta:
       All the data should be stored here. Best would be in subdirectories.
+
+    TRIAL:
+      PATH:
+        ./cache/01_trial_data
+      meta:
+        Data of trial model runs.
+      CLIMA_LAND:
+        PATH:
+          ./cache/01_trial_data/01_clima_land
+        meta:
+          Directory for CliMA Land trial data.
+        WRAPPER_DATA:
+          PATH:
+            ./cache/01_trial_data/01_clima_land/era5_2019_117_296_1X.csv
+          meta:
+            Data for CliMA Land vanilla run.
+      # end TRIAL
+
+    FEATURES:
+      PATH:
+        ../cache/02_features
+      meta:
+        Directory for data features and subarea selections
+      ERA5HOURLY:
+        PATH:
+          ../cache/02_features/era5hourly
+        V01:
+          PATH:
+            ../cache/02_features/era5hourly/v01
+    # end FEATURES
   # end DATA
   
   CODE: 

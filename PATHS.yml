@@ -9,6 +9,15 @@ DATA:
         ./cache/01_trial_data/01_clima_land
       WRAPPER_DATA:
         ./cache/01_trial_data/01_clima_land/era5_2019_117_296_1X.csv
+  FEATURES:
+    ROOT:
+      ./cache/02_features
+    ERA5HOURLY:
+      ROOT:
+        ./cache/02_features/era5hourly
+      V01:
+        ./cache/02_features/era5hourly/v01
+      # end ERAHOURLY
   # end DATA
 
 CODE:
