@@ -65,6 +65,13 @@ NOTEBOOKS:
     ./notebooks
   REFERENCES:
     ./notebooks/pinN1_stories/references.bib
+
+  SLURM:
+    ROOT:
+      ./notebooks/pinN1_stories/00_slurm
+    01_SCRIPT_AND_SUBMIT:
+      ./notebooks/pinN1_stories/00_slurm/01_make_scripts_and_submit.ipynb
+  # end SLURM
     
   MODEL_EXPLORATION:
     ROOT:

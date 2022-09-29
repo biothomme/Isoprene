@@ -182,7 +182,19 @@ CORE:
       meta:
         BibTex file of all references of this project.
     # end REFERENCES
-    
+
+    SLURM:
+      PATH:
+        ./notebooks/pinN1_stories/00_slurm
+      meta:
+        Notebooks to build slurm scripts and submit them. FOr reproducibility.
+      01_SCRIPT_AND_SUBMIT:
+        PATH:
+          ./notebooks/pinN1_stories/00_slurm/01_make_scripts_and_submit.ipynb
+        meta:
+          Main notebook to write simple slurm scripts and document their submission.
+    # end SLURM
+
     MODEL_EXPLORATION:
       PATH:
         ../notebooks/pinN1_stories/01_model_exploration
