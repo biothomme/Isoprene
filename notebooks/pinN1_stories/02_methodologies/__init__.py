@@ -19,9 +19,3 @@ def get_path(*key_args):
 # we load the scripts from the corresponding src directory
 src_dir = get_path("CODE", "METHODOLOGIES", "ROOT")
 sys.path.insert(1, src_dir)
-
-
-# for slurm submission:
-pth = "/home/biotoml/lsm/island_in_the_sun/projects/beta-Cyclocitral/uppmax_scripts"
-sys.path.insert(2, pth)
-from uppmax_script_class import UppmaxScript
