@@ -5,6 +5,7 @@ cache
 ext_src
 .julia
 .singularity
+.vscode
 conda
 
 # artefacts of computer
