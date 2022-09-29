@@ -134,6 +134,22 @@ CORE:
           ../src/scripts/slurm
         meta:
           Collection of SLURM scripts
+        P01_ERA5:
+          PATH:
+            ./src/scripts/slurm/job_2022_09_29_14_16_31.sh
+          meta:
+            SLURM script to run 01_ERA5 script in python.
+      
+      PYTHON:
+        PATH:
+          ../src/scripts/python
+        meta:
+          Collection of python executable scripts. Thought to be used in SLURM jobs.
+        01_ERA5:
+          PATH:
+            ../src/scripts/python/01_get_era5.py
+          meta:
+            Script to download the whole ERA5 data for v01 subareas (from 2015-2019).
     # end SCRIPTS
   # end CODE
 

@@ -56,7 +56,15 @@ CODE:
     ROOT:
       ./src/scripts
     SLURM:
-      ./src/scripts/slurm
+      ROOT:
+        ./src/scripts/slurm
+      P01_ERA5:
+        ./src/scripts/slurm/job_2022_09_29_14_16_31.sh
+    PYTHON:
+      ROOT:
+        ./src/scripts/python
+      01_ERA5:
+        ./src/scripts/python/01_get_era5.py
   # end SCRIPTS
 # end CODE
 
