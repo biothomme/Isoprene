@@ -127,6 +127,10 @@ EXTERNAL:
       ./island_in_the_sun/projects/beta-Cyclocitral/uppmax_scripts
     UPPMAXSCRIPT:
       ./island_in_the_sun/projects/beta-Cyclocitral/uppmax_scripts/uppmax_script_class.py
+    BASICS:
+      ./SCRIPT_BASICS.json
+    LOGDIR:
+      ./cache/00_slurmlog
 # end EXTERNAL
 
 TUTORIAL:

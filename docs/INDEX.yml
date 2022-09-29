@@ -315,6 +315,16 @@ CORE:
           ../island_in_the_sun/projects/beta-Cyclocitral/uppmax_scripts/uppmax_script_class.py
         meta:
           Main Class for uppmax slurm script construction.
+      BASICS:
+        PATH:
+          ../SCRIPT_BASICS.json
+        meta:
+          File that defines basics for SLURM script creation.
+      LOGDIR:
+        PATH:
+          ../cache/00_slurmlog
+        meta:
+          Directory for err and out files of the SLURM jobs.
     # end SLURMSUBMITTER
   # end EXTERNALS
   
