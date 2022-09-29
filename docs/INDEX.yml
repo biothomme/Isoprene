@@ -27,12 +27,28 @@ CORE:
         ../cache/02_features
       meta:
         Directory for data features and subarea selections
+        
+      SUBAREASELECTION:
+        PATH:
+          ../cache/02_features/subareas
+        meta:
+          Collection of csv files for subarea selection
+        V01:
+          PATH:
+            ../cache/02_features/subareas/2022_09_subareas_5y_48hnoo.csv
+          meta:
+            v01 of subarea selection (hourly from 01-01-2015 to 01-01-2020).
+        # end SUBAREASELECTION
       ERA5HOURLY:
         PATH:
           ../cache/02_features/era5hourly
+        meta:
+          Subarea specific data from ERA5/CDS in NetCDF format.
         V01:
           PATH:
             ../cache/02_features/era5hourly/v01
+          meta:
+            v01 of ERA5 data.
     # end FEATURES
   # end DATA
   

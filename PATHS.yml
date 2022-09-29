@@ -12,6 +12,12 @@ DATA:
   FEATURES:
     ROOT:
       ./cache/02_features
+    SUBAREASELECTION:
+      ROOT:
+        ./cache/02_features/subareas
+      V01:
+        ./cache/02_features/subareas/2022_09_subareas_5y_48hnoo.csv
+      # end SUBAREASELECTION
     ERA5HOURLY:
       ROOT:
         ./cache/02_features/era5hourly
