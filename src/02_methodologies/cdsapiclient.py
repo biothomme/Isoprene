@@ -1,4 +1,3 @@
-import multiprocessing
 from cdsapi import Client
 from cdsapi.api import Result
 import json
@@ -51,7 +50,6 @@ class ClientMultiRequest(Client):
         try:
             result.raise_for_status()
             reply = result.json()
-            print(reply, end="\n------\n")
         except Exception:
 
             if reply is None:
@@ -103,8 +101,6 @@ class ClientMultiRequest(Client):
         wait_time = 0
 
         while True:
-            print(reply, end="\n------\n")
-
             self.debug("REPLY %s", reply)
 
             if reply["state"] != self.last_state:

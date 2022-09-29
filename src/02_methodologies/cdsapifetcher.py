@@ -1,7 +1,10 @@
 # Here one can find a class to fetch ERA5 data from CDS using CDS-API
-import cdsapi
+from urllib.parse import urljoin
+from datetime import datetime
+import os
 
 from cdsapiclient import ClientMultiRequest
+from csvwriter import CSVWriter
 from subareacsv import SubareaCSV
 from utils_cdsapi import make_name_outfile
 
@@ -23,19 +26,27 @@ class CDSAPIFetcher:
         self.client = ClientMultiRequest(wait_until_complete=True)
         return
     
-    def get_data(self, name_csvfile, dict_processlog={}, directory=""):
+    def get_data(self, name_csvfile, dict_processlog={}, directory="",
+                 name_logcsvfile=None, force=False, force_logger=False,
+                 append_logger=True):
+        # we assign the logging file
+        self.make_csv_logger(name_logcsvfile, directory, force=force_logger,
+                            append=append_logger)
+        
         # we wrap the csv file and iterate through all rows/requests
         sac = SubareaCSV(name_csvfile)
         for row in sac:
             # we make a unique name
             name_file = make_name_outfile(directory, row)
-            # we avoid multiple requests
+            # we avoid multiple requests and overwrite
             if name_file in dict_processlog.keys() : continue
+            if os.path.exists(name_file) and not force : continue
             
             # make the request
             request = self.assemble_request(**row)
             
             # submit it and wait
+            timestamp_request = datetime.now()
             result = self.client._api("%s/resources/%s" % (
                 self.client.url, self.name_coll), request, "POST")
             
@@ -44,6 +55,20 @@ class CDSAPIFetcher:
             
             # document the fetch
             dict_processlog[name_file] = result.reply
+            list_log = [
+                timestamp_request,                               # date_fetch
+                urljoin(result._url, result.reply["location"]),  # url
+                result.reply["request_id"],                      # id_request
+                name_file,                                       # path
+                f"{request['year']}-{request['month']}-{request['day']}",  # date_data
+                os.path.getsize(name_file)                       # size
+            ]
+            self.logger_csv.write_listrow(list_log)
+            
+        # close the logger
+        self.logger_csv.handle.close()
+        del(self.logger_csv)
+        
         return dict_processlog
 
 
@@ -116,4 +141,16 @@ class CDSAPIFetcher:
         else : dict_request["time"] = time
         
         return dict_request
+    
+    def make_csv_logger(self, name_csvfile, directory, **kwargs):
+        LOGGING_HEADER = [
+            "date_fetch", "url", "id_request", "path", "date_data", "size_file"]
+
+        # we construct a name from the current time and date
+        if name_csvfile is None:
+            name_csvfile = datetime.now().strftime(
+                "%Y_%m_%d_%H_%M_cdsapifetch.csv")
+        path_csvfile = os.path.join(directory, name_csvfile)
+        self.logger_csv = CSVWriter(path_csvfile, LOGGING_HEADER, **kwargs)
+        return
 # end CDSAPIFetcher
