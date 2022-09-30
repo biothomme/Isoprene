@@ -761,7 +761,7 @@ TODO:
 MEETING PLAN: business as usual.
 
 ---
-## Meeting 12 <a id="M11"></a>
+## Meeting 12 <a id="M12"></a>
 #### *8th August 2022*
 
 
@@ -778,3 +778,28 @@ Refresh: After working on the Paper for NeurIPS workshop, the coding was taking 
     - Selected [subareas](../../cache/02_features/2022_09_subareas_5y_48hnoo.csv) using vegetation covered land area (from ERA5).
     - Tidied up
     - Tried CDS fetching in Julia - not efficient; will move to python
+
+TODO:
+- Finish paper and submit it
+- Download ERA5 from last 5 years with google earth engine
+
+---
+## Meeting 13 <a id="M13"></a>
+#### *29th August 2022*
+
+
+**Points for discussion:**
+
+Refresh: Paper was submitted and download of features (ERA5) is on desk.
+
+- Organisational:
+     1) Official presentation to be decided soon (when Björn is back)
+     2) No news from paper so far
+
+- Progress last week
+    - [Earth engine does not work for ERA5](../../notebooks/pinN1_stories/02_methodologies/08_download_era5_with_ee.ipynb) - dataset collection is not 0.1° x 0.1° resolution but 1° x 1°. Microsoft planetary computing a bit better (0.5° x 0.5°)
+    - Smoothened the [SLURM scripting and submission](../../notebooks/pinN1_stories/00_slurm/01_make_scripts_and_submit.ipynb)
+    - Established [ERA5 download using the CDS API](../../notebooks/pinN1_stories/02_methodologies/09_download_era5_with_cdsapi.ipynb). Currently running from script on SLURM nodes.
+
+TODO:
+...
