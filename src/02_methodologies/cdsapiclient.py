@@ -82,7 +82,7 @@ class ClientMultiRequest(Client):
         return self.wait_for_completion(reply, session=session)
         
         
-    def wait_for_completion(self, reply, limit_time=100,
+    def wait_for_completion(self, reply, limit_time=100000,
                             session=requests.Session()):
         """wait_and_download _summary_
 
