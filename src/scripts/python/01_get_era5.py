@@ -30,12 +30,15 @@ def get_cdsapi_fetcher():
     return CDSAPIFetcher()
 
 def download_era5(cdsapi_fetcher):
-    # define the csv file for subareas and the output directory
+    # define the csv file for subareas, the output directory, as well as the
+    # csv file that tracks the progress.
     FILE_SUBAREAS_V1 = get_path("DATA", "FEATURES", "SUBAREASELECTION", "V01")
-    DIR_ERA5_V1 = get_path("DATA", "FEATURES", "ERA5HOURLY", "V01")
+    DIR_ERA5_V1 = get_path("DATA", "FEATURES", "ERA5HOURLY", "V01", "ROOT")
+    FILE_LOG = get_path("DATA", "FEATURES", "ERA5HOURLY", "V01", "LOG")
 
     # download the data
-    cdsapi_fetcher.get_data(FILE_SUBAREAS_V1, directory=DIR_ERA5_V1)
+    cdsapi_fetcher.get_data(
+        FILE_SUBAREAS_V1, directory=DIR_ERA5_V1, name_logcsvfile=FILE_LOG)
     return
 
 
