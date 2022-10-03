@@ -49,7 +49,6 @@ CORE:
             ../cache/02_features/era5hourly/v01
           meta:
             v01 of ERA5 data.
-          ./cache/02_features/era5hourly/v01
           LOG:
             PATH:
               ../cache/02_features/era5hourly/v01/2022_09_29_14_25_cdsapifetch.csv
@@ -58,11 +57,11 @@ CORE:
         # end ERA5HOURLY
           BIOMASS:
       ROOT:
-        ./cache/02_features/gm_biomass
+        ../cache/02_features/gm_biomass
       GRIDDING_MACHINE:
-        ./src/.julia/v1.7_depot/artifacts/f3a9530cb23714c5d2a3863a7317ff2bfb32077a/BIOMASS_SHOOT_120X_1Y_V2.nc
+        ../src/.julia/v1.7_depot/artifacts/f3a9530cb23714c5d2a3863a7317ff2bfb32077a/BIOMASS_SHOOT_120X_1Y_V2.nc
       V01:
-        ./cache/02_features/gm_biomass
+        ../cache/02_features/gm_biomass
       # end BIOMASS
       CANOPY_HEIGHT:
         PATH:
@@ -73,7 +72,7 @@ CORE:
           PATH:
             ../src/.julia/v1.7_depot/artifacts/8e82b3b97603651740df68ff493cb497c6f7b486/CH_20X_1Y_V1.nc
           meta:
-            Dataset for canopy height as downloaded using GriddingMachine.jl and the label 'CH_20X_1Y_V1.nc'.
+            Dataset for canopy height as downloaded using GriddingMachine.jl and the label 'CH_20X_1Y_V1'.
         V01:
           PATH:
             ../cache/02_features/gm_canopy_height
@@ -91,122 +90,229 @@ CORE:
           meta:
             Year-specific LAI datasets (2015-2019) as downloaded using GriddingMachine.jl and the labels 'LAI_MODIS_10X_8D_2015_V1, 'LAI_MODIS_10X_8D_2016_V1', 'LAI_MODIS_10X_8D_2017_V1', 'LAI_MODIS_10X_8D_2018_V1' and 'LAI_MODIS_10X_8D_2019_V1'.
           "2015":
-            /home/biotoml/lsm/src/.julia/v1.7_depot/artifacts/536d3d2ae3b68a20e158b3ba3972b1d2c68435b0/LAI_MODIS_10X_8D_2015_V1.nc
+            ../src/.julia/v1.7_depot/artifacts/536d3d2ae3b68a20e158b3ba3972b1d2c68435b0/LAI_MODIS_10X_8D_2015_V1.nc
           "2016":
-            /home/biotoml/lsm/src/.julia/v1.7_depot/artifacts/4ca2094e4efdd74fc7a2b66a3fef5c04b8004626/LAI_MODIS_10X_8D_2016_V1.nc
+            ../src/.julia/v1.7_depot/artifacts/4ca2094e4efdd74fc7a2b66a3fef5c04b8004626/LAI_MODIS_10X_8D_2016_V1.nc
           "2017":
-            /home/biotoml/lsm/src/.julia/v1.7_depot/artifacts/12b9b9f8b8b54158a17e7ff0e691c1ab29418f5a/LAI_MODIS_10X_8D_2017_V1.nc
+            ../src/.julia/v1.7_depot/artifacts/12b9b9f8b8b54158a17e7ff0e691c1ab29418f5a/LAI_MODIS_10X_8D_2017_V1.nc
           "2018":
-            /home/biotoml/lsm/src/.julia/v1.7_depot/artifacts/56d784ba6edd908549d26ade5d3fb2daf9c9d65b/LAI_MODIS_10X_8D_2018_V1.nc
+            ../src/.julia/v1.7_depot/artifacts/56d784ba6edd908549d26ade5d3fb2daf9c9d65b/LAI_MODIS_10X_8D_2018_V1.nc
           "2019":
-            /home/biotoml/lsm/src/.julia/v1.7_depot/artifacts/87a9e1e1d7736ddc5466f40d83f3216f52efc642/LAI_MODIS_10X_8D_2019_V1.nc
+            ../src/.julia/v1.7_depot/artifacts/87a9e1e1d7736ddc5466f40d83f3216f52efc642/LAI_MODIS_10X_8D_2019_V1.nc
         V01:
-          ./cache/02_features/gm_lai
-      # end LAI
-    SOIL_MSWC:
-      ROOT:
-        ./cache/02_features/gm_soil_mswc
-      GRIDDING_MACHINE:
-        ./src/.julia/v1.7_depot/artifacts/035ee92010937a0aee873c88e8e4f3705fcc0d06/SOIL_SWCS_12X_1Y_V1.nc
-      V01:
-        ./cache/02_features/gm_soil_mswc
-      # end SOIL_MSWC
-    SOIL_WCR:
-      ROOT:
-        ./cache/02_features/gm_soil_wcr
-      GRIDDING_MACHINE:
-        ./src/.julia/v1.7_depot/artifacts/d5134186bfabf415032c06c8a484597bb235afe0/SOIL_SWCR_12X_1Y_V1.nc
-      V01:
-        ./cache/02_features/gm_soil_wcr
-      # end SOIL_WCR
-    SOIL_VGA:
-      ROOT:
-        ./cache/02_features/gm_soil_vga
-      GRIDDING_MACHINE:
-        ./src/.julia/v1.7_depot/artifacts/337b223183e9129d879b34a88c9ec36592bfc13e/SOIL_VGA_12X_1Y_V1.nc
-      V01:
-        ./cache/02_features/gm_soil_vga
-      # end SOIL_VGA
-    SOIL_VGN:
-      ROOT:
-        ./cache/02_features/gm_soil_vgn
-      GRIDDING_MACHINE:
-        ./src/.julia/v1.7_depot/artifacts/137a141ba5dba7db1e9922efd26487fb77d810f7/SOIL_VGN_12X_1Y_V1.nc
-      V01:
-        ./cache/02_features/gm_soil_vgn
-      # end SOIL_VGN
-    SOIL_KSAT:
-      ROOT:
-        ./cache/02_features/gm_soil_ksat
-      GRIDDING_MACHINE:
-        ./src/.julia/v1.7_depot/artifacts/b5ced69cd1849f1b001302ff23f1f8dbf1dabf43/SOIL_KSAT_100X_1Y_V2.nc
-      V01:
-        ./cache/02_features/gm_soil_ksat
-      # end SOIL_KSAT
-    SOIL_COLOR:
-      ROOT:
-        ./cache/02_features/gm_soil_color
-      GRIDDING_MACHINE:
-        ./src/.julia/v1.7_depot/artifacts/29cd434229d72705e9fa434c3a25e9889aba69e5/SC_2X_1Y_V1.nc
-      V01:
-        ./cache/02_features/gm_soil_color
-      # end SOIL_COLOR
-    ELEVATION:
-      ROOT:
-        ./cache/02_features/gm_elevation
-      GRIDDING_MACHINE:
-        ./src/.julia/v1.7_depot/artifacts/8982c2361022359a3a954d9f35b65d48f6b9f39b/ELEV_4X_1Y_V1.nc
-      V01:
-        ./cache/02_features/gm_elevation
-      # end ELEVATION
-    CHLOROPHYL:
-      ROOT:
-        ./cache/02_features/gm_chlorophyl
-      GRIDDING_MACHINE:
-        ./src/.julia/v1.7_depot/artifacts/ce410fa4f36c3abdaa18da6c3afcd78c9656d929/CHL_2X_7D_V1.nc
-      V01:
-        ./cache/02_features/gm_chlorophyl
-      # end CHLOROPHYL
-    SURFACE_AREA:
-      ROOT:
-        ./cache/02_features/gm_surface_area
-      GRIDDING_MACHINE:
-        ./src/.julia/v1.7_depot/artifacts/66bbb2fe72a284075f54b254f91b68ec7414f3fb/SA_2X_1Y_V1.nc
-      V01:
-        ./cache/02_features/gm_surface_area
-      # end SURFACE_AREA
-    CLUMPING_INDEX:
-      ROOT:
-        ./cache/02_features/gm_clumping_index
-      GRIDDING_MACHINE:
-        ./src/.julia/v1.7_depot/artifacts/bf4a75248eac9eac8e2f89e7634f30f1ca44174c/CI_2X_1Y_V1.nc
-      V01:
-        ./cache/02_features/gm_clumping_index
-      # end CLUMPING_INDEX
-    PLANT_FUNC_TYPE:
-      ROOT:
-        ./cache/02_features/gm_plant_func_type
-      GRIDDING_MACHINE:
-        ./src/.julia/v1.7_depot/artifacts/ecc92c654ef31d99fdea975629b899686c0bb71b/PFT_2X_1Y_V1.nc
-      V01:
-        ./cache/02_features/gm_plant_func_type
-      # end PLANT_FUNC_TYPE
-    VCMAX_RUBISCO:
-      ROOT:
-        ./cache/02_features/gm_vcmax_rubisco
-      GRIDDING_MACHINE:
-        ./src/.julia/v1.7_depot/artifacts/f77d012b83e957bbb2c7498f4068e9169025d425/VCMAX_2X_1Y_V2.nc
-      V01:
-        ./cache/02_features/gm_vcmax_rubisco
-      # end VCMAX_RUBISCO
-    TREE_DENSITY:
-      ROOT:
-        ./cache/02_features/gm_tree_density
-      GRIDDING_MACHINE:
-        ./src/.julia/v1.7_depot/artifacts/b8a1db6ec352de2526af2d1d2e16caaef48b488e/TD_2X_1Y_V1.nc
-      V01:
-        ./cache/02_features/gm_tree_density
-      # end TREE_DENSITY
+          PATH:
+           ../cache/02_features/gm_lai
+          meta:
+            Regridded and merged dataset (0.1° x 0.1°) of LAI.
+        # end LAI
+      SOIL_MSWC:
+        PATH:
+          ../cache/02_features/gm_soil_mswc
+        meta:
+          Dataset for saturated soil water content (i.e. maximal?!).
+        GRIDDING_MACHINE:
+          PATH:
+            ../src/.julia/v1.7_depot/artifacts/035ee92010937a0aee873c88e8e4f3705fcc0d06/SOIL_SWCS_12X_1Y_V1.nc
+          meta:
+            Dataset for saturated soil water content as downloaded using GriddingMachine.jl and the label 'SOIL_SWCS_12X_1Y_V1'.
+        V01:
+          PATH:
+            ../cache/02_features/gm_soil_mswc
+          meta:
+            Regridded dataset (0.1° x 0.1°) of saturated soil water content.
+        # end SOIL_MSWC
+      SOIL_WCR:
+        PATH:
+          ../cache/02_features/gm_soil_wcr
+        meta:
+          Dataset for residual soil water content.
+        GRIDDING_MACHINE:
+          PATH:
+            ../src/.julia/v1.7_depot/artifacts/d5134186bfabf415032c06c8a484597bb235afe0/SOIL_SWCR_12X_1Y_V1.nc
+          meta:
+            Dataset for saturated soil water content as downloaded using GriddingMachine.jl and the label 'SOIL_SWCR_12X_1Y_V1'.
+        V01:
+          PATH:
+            ../cache/02_features/gm_soil_wcr
+          meta:
+            Regridded dataset (0.1° x 0.1°) of residual soil water content.
+        # end SOIL_WCR
+      SOIL_VGA:
+        PATH:
+          ../cache/02_features/gm_soil_vga
+        meta:
+          Dataset for Van Genuchten $\alpha$.
+        GRIDDING_MACHINE:
+          PATH:
+            ../src/.julia/v1.7_depot/artifacts/337b223183e9129d879b34a88c9ec36592bfc13e/SOIL_VGA_12X_1Y_V1.nc
+          meta:
+            Dataset for Van Genuchten $\alpha$ as downloaded using GriddingMachine.jl and the label 'SOIL_VGA_12X_1Y_V1'.
+        V01:
+          PATH:
+            ../cache/02_features/gm_soil_vga
+          meta:
+            Regridded dataset (0.1° x 0.1°) of Van Genuchten $\alpha$.
+        # end SOIL_VGA
+      SOIL_VGN:
+        PATH:
+          ../cache/02_features/gm_soil_vgn
+        meta:
+          Dataset for Van Genuchten $n$.
+        GRIDDING_MACHINE:
+          PATH:
+            ../src/.julia/v1.7_depot/artifacts/137a141ba5dba7db1e9922efd26487fb77d810f7/SOIL_VGN_12X_1Y_V1.nc
+          meta:
+            Dataset for Van Genuchten $n$ as downloaded using GriddingMachine.jl and the label 'SOIL_VGA_12X_1Y_V1'.
+        V01:
+          PATH:
+            ../cache/02_features/gm_soil_vgn
+          meta:
+            Regridded dataset (0.1° x 0.1°) of Van Genuchten $n$.
+        # end SOIL_VGN
+      SOIL_KSAT:
+        PATH:
+          ../cache/02_features/gm_soil_ksat
+        meta:
+          Dataset for soil saturated hydraulic conductivity.
+        GRIDDING_MACHINE:
+          PATH:
+            ../src/.julia/v1.7_depot/artifacts/b5ced69cd1849f1b001302ff23f1f8dbf1dabf43/SOIL_KSAT_100X_1Y_V2.nc
+          meta:
+            Dataset for soil saturated hydraulic conductivity as downloaded using GriddingMachine.jl and the label 'SOIL_KSAT_100X_1Y_V2'.
+        V01:
+          PATH:
+            ../cache/02_features/gm_soil_ksat
+          meta:
+            Regridded dataset (0.1° x 0.1°) of saturated hydraulic conductivity.
+        # end SOIL_KSAT
+      SOIL_COLOR:
+        PATH:
+          ../cache/02_features/gm_soil_color
+        meta:
+          Dataset for soil color.
+        GRIDDING_MACHINE:
+          PATH:
+            ../src/.julia/v1.7_depot/artifacts/29cd434229d72705e9fa434c3a25e9889aba69e5/SC_2X_1Y_V1.nc
+          meta:
+            Dataset for soil color as downloaded using GriddingMachine.jl and the label 'SC_2X_1Y_V1'.
+        V01:
+          PATH:
+            ../cache/02_features/gm_soil_color
+          meta:
+            Regridded dataset (0.1° x 0.1°) of soil color.
+        # end SOIL_COLOR
+      ELEVATION:
+        PATH:
+          ../cache/02_features/gm_elevation
+        meta:
+          Dataset for elevation.
+        GRIDDING_MACHINE:
+          PATH:
+            ../src/.julia/v1.7_depot/artifacts/8982c2361022359a3a954d9f35b65d48f6b9f39b/ELEV_4X_1Y_V1.nc
+          meta:
+            Dataset for elevation as downloaded using GriddingMachine.jl and the label 'ELEV_4X_1Y_V1'.
+        V01:
+          PATH:
+            ../cache/02_features/gm_elevation
+          meta:
+            Regridded dataset (0.1° x 0.1°) of elevation.
+        # end ELEVATION
+      CHLOROPHYLL:
+        PATH:
+          ./cache/02_features/gm_chlorophyll
+        meta:
+          Dataset for chlorophyll.
+        GRIDDING_MACHINE:
+          PATH:
+            ../src/.julia/v1.7_depot/artifacts/ce410fa4f36c3abdaa18da6c3afcd78c9656d929/CHL_2X_7D_V1.nc
+          meta:
+            Dataset for chlorophyll as downloaded using GriddingMachine.jl and the label 'CHL_2X_7D_V1'.
+        V01:
+          PATH:
+            ../cache/02_features/gm_chlorophyll
+          meta:
+            Regridded dataset (0.1° x 0.1°) of chlorophyll.
+        # end CHLOROPHYL
+      SURFACE_AREA:
+        PATH:
+          ../cache/02_features/gm_surface_area
+        meta:
+          Dataset for land surface area.
+        GRIDDING_MACHINE:
+          PATH:
+            ../src/.julia/v1.7_depot/artifacts/66bbb2fe72a284075f54b254f91b68ec7414f3fb/SA_2X_1Y_V1.nc
+          meta:
+            Dataset for land surface area as downloaded using GriddingMachine.jl and the label 'SA_2X_1Y_V1'.
+        V01:
+          PATH:
+            ../cache/02_features/gm_surface_area
+          meta:
+            Regridded dataset (0.1° x 0.1°) of land surface area.
+        # end SURFACE_AREA
+      CLUMPING_INDEX:
+        PATH:
+          ../cache/02_features/gm_clumping_index
+        meta:
+          Dataset for clumping index.
+        GRIDDING_MACHINE:
+          PATH:
+            ../src/.julia/v1.7_depot/artifacts/bf4a75248eac9eac8e2f89e7634f30f1ca44174c/CI_2X_1Y_V1.nc
+          meta:
+            Dataset for clumping index as downloaded using GriddingMachine.jl and the label 'CI_2X_1Y_V1'.
+        V01:
+          PATH:
+            ../cache/02_features/gm_clumping_index
+          meta:
+            Regridded dataset (0.1° x 0.1°) of clumping index.
+        # end CLUMPING_INDEX
+      PLANT_FUNC_TYPE:
+        PATH:
+          ../cache/02_features/gm_plant_func_typev
+        meta:
+          Dataset for plant functional type.
+        GRIDDING_MACHINE:
+          PATH:
+            ../src/.julia/v1.7_depot/artifacts/ecc92c654ef31d99fdea975629b899686c0bb71b/PFT_2X_1Y_V1.nc
+          meta:
+            Dataset for plant functional type as downloaded using GriddingMachine.jl and the label 'PFT_2X_1Y_V1'.
+        V01:
+          PATH:
+            ../cache/02_features/gm_plant_func_type
+          meta:
+            Regridded dataset (0.1° x 0.1°) of plant functional type.
+        # end PLANT_FUNC_TYPE
+      VCMAX_RUBISCO:
+        PATH:
+          ../cache/02_features/gm_vcmax_rubisco
+        meta:
+          Dataset for maximal Rubisco activity (vcmax).
+        GRIDDING_MACHINE:
+          PATH:
+            ../src/.julia/v1.7_depot/artifacts/f77d012b83e957bbb2c7498f4068e9169025d425/VCMAX_2X_1Y_V2.nc
+          meta:
+            Dataset for maximal Rubisco activity (vcmax) as downloaded using GriddingMachine.jl and the label 'VCMAX_2X_1Y_V2'.
+        V01:
+          PATH:
+            ../cache/02_features/gm_vcmax_rubisco
+          meta:
+            Regridded dataset (0.1° x 0.1°) of maximal Rubisco activity (vcmax).
+        # end VCMAX_RUBISCO
+      TREE_DENSITY:
+        PATH:
+          ../cache/02_features/gm_tree_density
+        meta:
+          Dataset for tree density.
+        GRIDDING_MACHINE:
+          PATH:
+            ../src/.julia/v1.7_depot/artifacts/b8a1db6ec352de2526af2d1d2e16caaef48b488e/TD_2X_1Y_V1.nc
+          meta:
+            Dataset for tree density as downloaded using GriddingMachine.jl and the label 'TD_2X_1Y_V1'.
+        V01:
+          PATH:
+            ../cache/02_features/gm_tree_density
+          meta:
+            Regridded dataset (0.1° x 0.1°) of tree density.
+        # end TREE_DENSITY
     # end FEATURES
   # end DATA
   

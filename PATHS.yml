@@ -47,15 +47,15 @@ DATA:
       ROOT:
         ./cache/02_features/gm_lai
       GRIDDING_MACHINE:
-        2015:
+        "2015":
           /home/biotoml/lsm/src/.julia/v1.7_depot/artifacts/536d3d2ae3b68a20e158b3ba3972b1d2c68435b0/LAI_MODIS_10X_8D_2015_V1.nc
-        2016:
+        "2016":
           /home/biotoml/lsm/src/.julia/v1.7_depot/artifacts/4ca2094e4efdd74fc7a2b66a3fef5c04b8004626/LAI_MODIS_10X_8D_2016_V1.nc
-        2017:
+        "2017":
           /home/biotoml/lsm/src/.julia/v1.7_depot/artifacts/12b9b9f8b8b54158a17e7ff0e691c1ab29418f5a/LAI_MODIS_10X_8D_2017_V1.nc
-        2018:
+        "2018":
           /home/biotoml/lsm/src/.julia/v1.7_depot/artifacts/56d784ba6edd908549d26ade5d3fb2daf9c9d65b/LAI_MODIS_10X_8D_2018_V1.nc
-        2019:
+        "2019":
           /home/biotoml/lsm/src/.julia/v1.7_depot/artifacts/87a9e1e1d7736ddc5466f40d83f3216f52efc642/LAI_MODIS_10X_8D_2019_V1.nc
       V01:
         ./cache/02_features/gm_lai
@@ -116,14 +116,14 @@ DATA:
       V01:
         ./cache/02_features/gm_elevation
       # end ELEVATION
-    CHLOROPHYL:
+    CHLOROPHYLL:
       ROOT:
-        ./cache/02_features/gm_chlorophyl
+        ./cache/02_features/gm_chlorophyll
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/ce410fa4f36c3abdaa18da6c3afcd78c9656d929/CHL_2X_7D_V1.nc
       V01:
-        ./cache/02_features/gm_chlorophyl
-      # end CHLOROPHYL
+        ./cache/02_features/gm_chlorophyll
+      # end CHLOROPHYLL
     SURFACE_AREA:
       ROOT:
         ./cache/02_features/gm_surface_area
