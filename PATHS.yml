@@ -33,7 +33,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/f3a9530cb23714c5d2a3863a7317ff2bfb32077a/BIOMASS_SHOOT_120X_1Y_V2.nc
       V01:
-        ./cache/02_features/gm_biomass
+        ./cache/02_features/gm_biomass/BIOMASS_SHOOT_10X_1Y_V2.nc
       # end BIOMASS
     CANOPY_HEIGHT:
       ROOT:
@@ -41,7 +41,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/8e82b3b97603651740df68ff493cb497c6f7b486/CH_20X_1Y_V1.nc
       V01:
-        ./cache/02_features/gm_canopy_height
+        ./cache/02_features/gm_canopy_height/CH_10X_1Y_V1.nc
       # end CANOPY_HEIGHT
     LAI:
       ROOT:
@@ -58,7 +58,7 @@ DATA:
         "2019":
           /home/biotoml/lsm/src/.julia/v1.7_depot/artifacts/87a9e1e1d7736ddc5466f40d83f3216f52efc642/LAI_MODIS_10X_8D_2019_V1.nc
       V01:
-        ./cache/02_features/gm_lai
+        ./cache/02_features/gm_lai/LAI_MODIS_10X_8D_2015_2019_V1.nc
       # end LAI
     SOIL_MSWC:
       ROOT:
@@ -66,7 +66,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/035ee92010937a0aee873c88e8e4f3705fcc0d06/SOIL_SWCS_12X_1Y_V1.nc
       V01:
-        ./cache/02_features/gm_soil_mswc
+        ./cache/02_features/gm_soil_mswc/SOIL_SWCS_10X_1Y_V1.nc
       # end SOIL_MSWC
     SOIL_WCR:
       ROOT:
@@ -74,7 +74,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/d5134186bfabf415032c06c8a484597bb235afe0/SOIL_SWCR_12X_1Y_V1.nc
       V01:
-        ./cache/02_features/gm_soil_wcr
+        ./cache/02_features/gm_soil_wcr/SOIL_SWCR_10X_1Y_V1.nc
       # end SOIL_WCR
     SOIL_VGA:
       ROOT:
@@ -82,7 +82,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/337b223183e9129d879b34a88c9ec36592bfc13e/SOIL_VGA_12X_1Y_V1.nc
       V01:
-        ./cache/02_features/gm_soil_vga
+        ./cache/02_features/gm_soil_vga/SOIL_VGA_10X_1Y_V1.nc
       # end SOIL_VGA
     SOIL_VGN:
       ROOT:
@@ -90,7 +90,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/137a141ba5dba7db1e9922efd26487fb77d810f7/SOIL_VGN_12X_1Y_V1.nc
       V01:
-        ./cache/02_features/gm_soil_vgn
+        ./cache/02_features/gm_soil_vgn/SOIL_VGN_10X_1Y_V1.nc
       # end SOIL_VGN
     SOIL_KSAT:
       ROOT:
@@ -98,7 +98,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/b5ced69cd1849f1b001302ff23f1f8dbf1dabf43/SOIL_KSAT_100X_1Y_V2.nc
       V01:
-        ./cache/02_features/gm_soil_ksat
+        ./cache/02_features/gm_soil_ksat/SOIL_KSAT_10X_1Y_V2.nc
       # end SOIL_KSAT
     SOIL_COLOR:
       ROOT:
@@ -106,7 +106,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/29cd434229d72705e9fa434c3a25e9889aba69e5/SC_2X_1Y_V1.nc
       V01:
-        ./cache/02_features/gm_soil_color
+        ./cache/02_features/gm_soil_color/SC_10X_1Y_V1.nc
       # end SOIL_COLOR
     ELEVATION:
       ROOT:
@@ -114,7 +114,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/8982c2361022359a3a954d9f35b65d48f6b9f39b/ELEV_4X_1Y_V1.nc
       V01:
-        ./cache/02_features/gm_elevation
+        ./cache/02_features/gm_elevation/ELEV_10X_1Y_V1.nc
       # end ELEVATION
     CHLOROPHYLL:
       ROOT:
@@ -122,7 +122,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/ce410fa4f36c3abdaa18da6c3afcd78c9656d929/CHL_2X_7D_V1.nc
       V01:
-        ./cache/02_features/gm_chlorophyll
+        ./cache/02_features/gm_chlorophyll/CHL_10X_7D_V1.nc
       # end CHLOROPHYLL
     SURFACE_AREA:
       ROOT:
@@ -130,7 +130,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/66bbb2fe72a284075f54b254f91b68ec7414f3fb/SA_2X_1Y_V1.nc
       V01:
-        ./cache/02_features/gm_surface_area
+        ./cache/02_features/gm_surface_area/SA_10X_1Y_V1.nc
       # end SURFACE_AREA
     CLUMPING_INDEX:
       ROOT:
@@ -138,7 +138,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/bf4a75248eac9eac8e2f89e7634f30f1ca44174c/CI_2X_1Y_V1.nc
       V01:
-        ./cache/02_features/gm_clumping_index
+        ./cache/02_features/gm_clumping_index/CI_10X_1Y_V1.nc
       # end CLUMPING_INDEX
     PLANT_FUNC_TYPE:
       ROOT:
@@ -146,7 +146,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/ecc92c654ef31d99fdea975629b899686c0bb71b/PFT_2X_1Y_V1.nc
       V01:
-        ./cache/02_features/gm_plant_func_type
+        ./cache/02_features/gm_plant_func_type/PFT_10X_1Y_V1.nc
       # end PLANT_FUNC_TYPE
     VCMAX_RUBISCO:
       ROOT:
@@ -154,7 +154,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/f77d012b83e957bbb2c7498f4068e9169025d425/VCMAX_2X_1Y_V2.nc
       V01:
-        ./cache/02_features/gm_vcmax_rubisco
+        ./cache/02_features/gm_vcmax_rubisco/VCMAX_10X_1Y_V2.nc
       # end VCMAX_RUBISCO
     TREE_DENSITY:
       ROOT:
@@ -162,7 +162,7 @@ DATA:
       GRIDDING_MACHINE:
         ./src/.julia/v1.7_depot/artifacts/b8a1db6ec352de2526af2d1d2e16caaef48b488e/TD_2X_1Y_V1.nc
       V01:
-        ./cache/02_features/gm_tree_density
+        ./cache/02_features/gm_tree_density/TD_10X_1Y_V1.nc
       # end TREE_DENSITY
   # end DATA
 

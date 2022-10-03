@@ -61,7 +61,7 @@ CORE:
       GRIDDING_MACHINE:
         ../src/.julia/v1.7_depot/artifacts/f3a9530cb23714c5d2a3863a7317ff2bfb32077a/BIOMASS_SHOOT_120X_1Y_V2.nc
       V01:
-        ../cache/02_features/gm_biomass
+        ../cache/02_features/gm_biomass/BIOMASS_SHOOT_10X_1Y_V2.nc
       # end BIOMASS
       CANOPY_HEIGHT:
         PATH:
@@ -75,7 +75,7 @@ CORE:
             Dataset for canopy height as downloaded using GriddingMachine.jl and the label 'CH_20X_1Y_V1'.
         V01:
           PATH:
-            ../cache/02_features/gm_canopy_height
+            ../cache/02_features/gm_canopy_height/CH_10X_1Y_V1.nc
           meta:
             Regridded dataset (0.1° x 0.1°) of canopy height.
         # end CANOPY_HEIGHT
@@ -101,13 +101,13 @@ CORE:
             ../src/.julia/v1.7_depot/artifacts/87a9e1e1d7736ddc5466f40d83f3216f52efc642/LAI_MODIS_10X_8D_2019_V1.nc
         V01:
           PATH:
-           ../cache/02_features/gm_lai
+           ../cache/02_features/gm_lai/LAI_MODIS_10X_8D_2015_2019_V1.nc
           meta:
             Regridded and merged dataset (0.1° x 0.1°) of LAI.
         # end LAI
       SOIL_MSWC:
         PATH:
-          ../cache/02_features/gm_soil_mswc
+          ../cache/02_features/gm_soil_mswc/
         meta:
           Dataset for saturated soil water content (i.e. maximal?!).
         GRIDDING_MACHINE:
@@ -117,7 +117,7 @@ CORE:
             Dataset for saturated soil water content as downloaded using GriddingMachine.jl and the label 'SOIL_SWCS_12X_1Y_V1'.
         V01:
           PATH:
-            ../cache/02_features/gm_soil_mswc
+            ../cache/02_features/gm_soil_mswc/SOIL_SWCS_10X_1Y_V1.nc
           meta:
             Regridded dataset (0.1° x 0.1°) of saturated soil water content.
         # end SOIL_MSWC
@@ -133,7 +133,7 @@ CORE:
             Dataset for saturated soil water content as downloaded using GriddingMachine.jl and the label 'SOIL_SWCR_12X_1Y_V1'.
         V01:
           PATH:
-            ../cache/02_features/gm_soil_wcr
+            ../cache/02_features/gm_soil_wcr/SOIL_SWCR_10X_1Y_V1.nc
           meta:
             Regridded dataset (0.1° x 0.1°) of residual soil water content.
         # end SOIL_WCR
@@ -149,7 +149,7 @@ CORE:
             Dataset for Van Genuchten $\alpha$ as downloaded using GriddingMachine.jl and the label 'SOIL_VGA_12X_1Y_V1'.
         V01:
           PATH:
-            ../cache/02_features/gm_soil_vga
+            ../cache/02_features/gm_soil_vga/SOIL_VGA_10X_1Y_V1.nc
           meta:
             Regridded dataset (0.1° x 0.1°) of Van Genuchten $\alpha$.
         # end SOIL_VGA
@@ -165,7 +165,7 @@ CORE:
             Dataset for Van Genuchten $n$ as downloaded using GriddingMachine.jl and the label 'SOIL_VGA_12X_1Y_V1'.
         V01:
           PATH:
-            ../cache/02_features/gm_soil_vgn
+            ../cache/02_features/gm_soil_vgn/SOIL_VGN_10X_1Y_V1.nc
           meta:
             Regridded dataset (0.1° x 0.1°) of Van Genuchten $n$.
         # end SOIL_VGN
@@ -181,7 +181,7 @@ CORE:
             Dataset for soil saturated hydraulic conductivity as downloaded using GriddingMachine.jl and the label 'SOIL_KSAT_100X_1Y_V2'.
         V01:
           PATH:
-            ../cache/02_features/gm_soil_ksat
+            ../cache/02_features/gm_soil_ksat/SOIL_KSAT_10X_1Y_V2.nc
           meta:
             Regridded dataset (0.1° x 0.1°) of saturated hydraulic conductivity.
         # end SOIL_KSAT
@@ -197,7 +197,7 @@ CORE:
             Dataset for soil color as downloaded using GriddingMachine.jl and the label 'SC_2X_1Y_V1'.
         V01:
           PATH:
-            ../cache/02_features/gm_soil_color
+            ../cache/02_features/gm_soil_color/SC_10X_1Y_V1.nc
           meta:
             Regridded dataset (0.1° x 0.1°) of soil color.
         # end SOIL_COLOR
@@ -213,7 +213,7 @@ CORE:
             Dataset for elevation as downloaded using GriddingMachine.jl and the label 'ELEV_4X_1Y_V1'.
         V01:
           PATH:
-            ../cache/02_features/gm_elevation
+            ../cache/02_features/gm_elevation/ELEV_10X_1Y_V1.nc
           meta:
             Regridded dataset (0.1° x 0.1°) of elevation.
         # end ELEVATION
@@ -229,7 +229,7 @@ CORE:
             Dataset for chlorophyll as downloaded using GriddingMachine.jl and the label 'CHL_2X_7D_V1'.
         V01:
           PATH:
-            ../cache/02_features/gm_chlorophyll
+            ../cache/02_features/gm_chlorophyll/CHL_10X_7D_V1.nc
           meta:
             Regridded dataset (0.1° x 0.1°) of chlorophyll.
         # end CHLOROPHYL
@@ -245,7 +245,7 @@ CORE:
             Dataset for land surface area as downloaded using GriddingMachine.jl and the label 'SA_2X_1Y_V1'.
         V01:
           PATH:
-            ../cache/02_features/gm_surface_area
+            ../cache/02_features/gm_surface_area/SA_10X_1Y_V1.nc
           meta:
             Regridded dataset (0.1° x 0.1°) of land surface area.
         # end SURFACE_AREA
@@ -261,7 +261,7 @@ CORE:
             Dataset for clumping index as downloaded using GriddingMachine.jl and the label 'CI_2X_1Y_V1'.
         V01:
           PATH:
-            ../cache/02_features/gm_clumping_index
+            ../cache/02_features/gm_clumping_index//CI_10X_1Y_V1.nc
           meta:
             Regridded dataset (0.1° x 0.1°) of clumping index.
         # end CLUMPING_INDEX
@@ -277,7 +277,7 @@ CORE:
             Dataset for plant functional type as downloaded using GriddingMachine.jl and the label 'PFT_2X_1Y_V1'.
         V01:
           PATH:
-            ../cache/02_features/gm_plant_func_type
+            ../cache/02_features/gm_plant_func_type/PFT_10X_1Y_V1.nc
           meta:
             Regridded dataset (0.1° x 0.1°) of plant functional type.
         # end PLANT_FUNC_TYPE
@@ -293,7 +293,7 @@ CORE:
             Dataset for maximal Rubisco activity (vcmax) as downloaded using GriddingMachine.jl and the label 'VCMAX_2X_1Y_V2'.
         V01:
           PATH:
-            ../cache/02_features/gm_vcmax_rubisco
+            ../cache/02_features/gm_vcmax_rubisco/VCMAX_10X_1Y_V2.nc
           meta:
             Regridded dataset (0.1° x 0.1°) of maximal Rubisco activity (vcmax).
         # end VCMAX_RUBISCO
@@ -309,7 +309,7 @@ CORE:
             Dataset for tree density as downloaded using GriddingMachine.jl and the label 'TD_2X_1Y_V1'.
         V01:
           PATH:
-            ../cache/02_features/gm_tree_density
+            ../cache/02_features/gm_tree_density/TD_10X_1Y_V1.nc
           meta:
             Regridded dataset (0.1° x 0.1°) of tree density.
         # end TREE_DENSITY
