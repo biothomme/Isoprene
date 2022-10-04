@@ -378,6 +378,48 @@ CORE:
             ../src/02_methodologies/utils_subareaselection.py
           meta:
             Functionalities for subarea selection.
+
+        CDSAPI_CLIENT:
+          PATH:
+            ../src/02_methodologies/cdsapiclient.py
+          meta:
+            Wrapper around the cdsapi client.
+
+        CDSAPI_FETCHER:
+          PATH:
+            ../src/02_methodologies/cdsapifetcher.py
+          meta:
+            Class to fetch data from cdsapi.
+
+        SUBAREACSV:
+          PATH:
+            ../src/02_methodologies/subareacsv.py
+          meta:
+            Wrapper around CSV that lists subareas for CDS fetching.
+
+        UTILS_CDSAPI:
+          PATH:
+            ../src/02_methodologies/utils_cdsapi.py
+          meta:
+            Utility functions for cdsapi fetching.
+
+        CSV_WRITER:
+          PATH:
+            ../src/02_methodologies/csvwriter.py
+          meta:
+            Class to write CSV for tracking downloads, etc. Wraps around csv.DictWriter.
+
+        EERAFETCHER:
+          PATH:
+            ../src/02_methodologies/eeerafetcher.py
+          meta:
+            Wrapper class to download data (CDS/ERA5) from google earth engine.
+            
+        REGRIDDER:
+          PATH:
+            ../src/02_methodologies/regridder.py
+          meta:
+            Wrapper around xesmf.Regridder to regrid netCDF files.
     # end METHODOLOGIES
 
     TRIALS:

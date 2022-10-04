@@ -190,6 +190,20 @@ CODE:
         ./src/02_methodologies/subareaselector.py
       UTILS_SUBAREASELECTION:
         ./src/02_methodologies/utils_subareaselection.py
+      CDSAPI_CLIENT:
+        ./src/02_methodologies/cdsapiclient.py
+      CDSAPI_FETCHER:
+        ./src/02_methodologies/cdsapifetcher.py
+      SUBAREACSV:
+        ./src/02_methodologies/subareacsv.py
+      UTILS_CDSAPI:
+        ./src/02_methodologies/utils_cdsapi.py
+      CSV_WRITER:
+        ./src/02_methodologies/csvwriter.py
+      EERAFETCHER:
+        ./src/02_methodologies/eeerafetcher.py
+      REGRIDDER:
+        ./src/02_methodologies/regridder.py
   # end METHODOLOGIES
 
   SCRIPTS:
