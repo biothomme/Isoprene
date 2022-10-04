@@ -403,7 +403,11 @@ CORE:
             ./src/scripts/slurm/job_2022_09_29_14_16_31.sh
           meta:
             SLURM script to run 01_ERA5 script in python.
-      
+        P02_REGRIDDING:
+          PATH:
+            ./src/scripts/slurm/job_2022_10_04_13_27_47.sh
+          meta:
+            SLURM script to run 02_REGRIDDING script in python.
       PYTHON:
         PATH:
           ../src/scripts/python
@@ -414,6 +418,11 @@ CORE:
             ../src/scripts/python/01_get_era5.py
           meta:
             Script to download the whole ERA5 data for v01 subareas (from 2015-2019).
+        02_REGRIDDING:
+          PATH:
+            ./src/scripts/python/02_regrid_griddinmachine_datasets.py
+          meta:
+            Script to regrid the datasets that were downloaded using GriddingMachine.jl
     # end SCRIPTS
   # end CODE
 

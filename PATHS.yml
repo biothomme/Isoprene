@@ -200,11 +200,15 @@ CODE:
         ./src/scripts/slurm
       P01_ERA5:
         ./src/scripts/slurm/job_2022_09_29_14_16_31.sh
+      P02_REGRIDDING:
+        ./src/scripts/slurm/job_2022_10_04_13_27_47.sh
     PYTHON:
       ROOT:
         ./src/scripts/python
       01_ERA5:
         ./src/scripts/python/01_get_era5.py
+      02_REGRIDDING:
+        ./src/scripts/python/02_regrid_griddinmachine_datasets.py
   # end SCRIPTS
 # end CODE
 
