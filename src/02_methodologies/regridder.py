@@ -17,16 +17,39 @@ class RegridderSimple:
         return
     
     def regrid(self, name_latitude="lat", name_longitude="lon",
-               range_latitude=np.arange(-89.95, 89.95, .1),
-               range_longitude=np.arange(-179.95, 179.95, .1),
+               range_latitude=np.arange(-89.95, 89.95+.1, .1),
+               range_longitude=np.arange(-179.95, 179.95+.1, .1),
                method="bilinear", extrap_method="nearest_s2d",
                copy_attributes=True, force_new_regridder=False):
+        """regrid
+
+        Regrid NetCDF dataset using method.
+
+        Args:
+            name_latitude (str, optional): Name of the latitude dimension. Defaults to "lat".
+            name_longitude (str, optional): Name of the longitude dimension. Defaults to "lon".
+            range_latitude (list, optional): Array of latitude coordinates. Defaults to np.arange(-89.95, 89.95+.1, .1).
+            range_longitude (list, optional):  Array of longitude coordinates. Defaults to np.arange(-179.95, 179.95+.1, .1).
+            method (str, optional): Method for regridding. Defaults to "bilinear".
+            extrap_method (str, optional): Method for extrapolation of data. Defaults to "nearest_s2d".
+            copy_attributes (bool, optional): Copy attributes of the NetCDF file to the new one. Defaults to True.
+            force_new_regridder (bool, optional): Force to set up new Regridder instance if already present. Defaults to False.
+
+        Returns:
+            xarray.array: Regridded Dataset
+        """
         # initialize regridder if not given
         if not hasattr(self, "regridder") or force_new_regridder:
             # making a template dataset with desired shape
+            dict_additional_dims = {
+                k: ([k], list(self.ds[k].values))
+                for k in self.ds.dims
+                if k not in [name_latitude, name_longitude]
+            }
             ds_tmplt = xr.Dataset({
                 "lat": ([name_latitude], range_latitude),
                 "lon": ([name_longitude], range_longitude),
+                **dict_additional_dims
                 })
             # make regridder - this step takes ages
             self.regridder = xe.Regridder(
@@ -41,6 +64,15 @@ class RegridderSimple:
     
     def regrid_and_save(self, name_outfile, force=False, engine="h5netcdf",
                         **kwargs):
+        """regrid_and_save
+
+        Regrid NetCDF dataset and save it as new file.
+
+        Args:
+            name_outfile (str): Name of the regridded new file.
+            force (bool, optional): Force overwrite of file. Defaults to False.
+            engine (str, optional): Engine to write new NetCDF file. Defaults to "h5netcdf".
+        """
         if os.path.exists(name_outfile) and not force:
             raise FileExistsError(
                 f"The desired output file {name_outfile} already exists."
@@ -53,6 +85,16 @@ class RegridderSimple:
         return
     
     def _copy_attrs(self, ds_regridded):
+        """_copy_attrs
+
+        Copy attributes from old dataset to given regridded dataset
+
+        Args:
+            ds_regridded (xarray.array): Regridded dataset.
+
+        Returns:
+            xarray.array: Regridded dataset with updated attributes.
+        """
         STR_NEWLINE = "\n"
         # copy the overall attributes and add annotation
         ds_regridded.attrs = self.ds.attrs

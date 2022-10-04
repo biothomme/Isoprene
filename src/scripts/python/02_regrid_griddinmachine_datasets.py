@@ -61,6 +61,7 @@ def split_datasets():
     # thus, we split them into 4 groups
     for k, v in dict_gmfeatures.items():
         # most complex are data with a time component
+        # ATTENTION: xesmf does not support temporal regridding
         if not "_1Y_" in v["GRIDDING_MACHINE"]:
             group = "temporal"
         # most simple those with only lat and lon
@@ -90,17 +91,6 @@ def get_regridder(name_ncfile):
     from regridder import RegridderSimple
     return RegridderSimple(name_ncfile)
 
-def download_era5(cdsapi_fetcher):
-    # define the csv file for subareas, the output directory, as well as the
-    # csv file that tracks the progress.
-    FILE_SUBAREAS_V1 = get_path("DATA", "FEATURES", "SUBAREASELECTION", "V01")
-    DIR_ERA5_V1 = get_path("DATA", "FEATURES", "ERA5HOURLY", "V01", "ROOT")
-    FILE_LOG = get_path("DATA", "FEATURES", "ERA5HOURLY", "V01", "LOG")
-
-    # download the data
-    cdsapi_fetcher.get_data(
-        FILE_SUBAREAS_V1, directory=DIR_ERA5_V1, name_logcsvfile=FILE_LOG)
-    return
 
 
 # MAIN
@@ -116,8 +106,27 @@ def main():
         file_ds = get_path("DATA", "FEATURES", key, "GRIDDING_MACHINE")
         file_ds_regridded = get_path("DATA", "FEATURES", key, "V01")
         
-        rgs = RegridderSimple(file_ds)
-        rgs.regrid_and_save(FILE_OUTPUT)
+        rgs = get_regridder(file_ds)
+        rgs.regrid_and_save(file_ds_regridded)
+    
+    # next, we do the same for the multilayered soil datsets
+    for key in dict_datasets["multilayered"].keys():
+        file_ds = get_path("DATA", "FEATURES", key, "GRIDDING_MACHINE")
+        file_ds_regridded = get_path("DATA", "FEATURES", key, "V01")
+        
+        rgs = get_regridder(file_ds)
+        rgs.regrid_and_save(file_ds_regridded)
+    
+    # for the pft dataset we apply conservative mapping
+    for key in dict_datasets["categorical"].keys():
+        file_ds = get_path("DATA", "FEATURES", key, "GRIDDING_MACHINE")
+        file_ds_regridded = get_path("DATA", "FEATURES", key, "V01")
+        
+        rgs = get_regridder(file_ds)
+        rgs.regrid_and_save(file_ds_regridded, method="conservative")
+
+    # for the LAI dataset (temporal) we do not do regridding - already in shape
+    pass
 
     print("Done!")
     return
