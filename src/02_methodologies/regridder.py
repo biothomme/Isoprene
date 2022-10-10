@@ -13,6 +13,10 @@ class RegridderSimple:
         
         # load the xarray
         self.ds = xr.open_dataset(self.file)
+        
+        if len(self.ds.dims) > 2:
+            self.ds = xr.open_dataset(self.file, chunks={"ind": 1})
+        
         if fill_na : self.ds = self.ds.fillna(value_fill_na)
         return
     
@@ -38,6 +42,9 @@ class RegridderSimple:
         Returns:
             xarray.array: Regridded Dataset
         """
+        # we need to avoid combination "conservative" with extrapolation
+        if method == "conservative" : extrap_method = None
+        
         # initialize regridder if not given
         if not hasattr(self, "regridder") or force_new_regridder:
             # making a template dataset with desired shape
