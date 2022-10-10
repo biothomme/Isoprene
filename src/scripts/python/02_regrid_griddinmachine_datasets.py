@@ -103,14 +103,19 @@ def main():
     
     # first we make the simple bilinear non temporal scalar regridding
     for key in dict_datasets["simple"].keys():
-        file_ds = get_path("DATA", "FEATURES", key, "GRIDDING_MACHINE")
-        file_ds_regridded = get_path("DATA", "FEATURES", key, "V01")
+        if os.path.exists(get_path("DATA", "FEATURES", key, "V01")) : continue
+        print(key)
+        try:
+            file_ds = get_path("DATA", "FEATURES", key, "GRIDDING_MACHINE")
+            file_ds_regridded = get_path("DATA", "FEATURES", key, "V01")
         
-        rgs = get_regridder(file_ds)
-        rgs.regrid_and_save(file_ds_regridded)
-    
+            rgs = get_regridder(file_ds)
+            rgs.regrid_and_save(file_ds_regridded)
+        except TypeError:
+            print("failed")
     # next, we do the same for the multilayered soil datsets
     for key in dict_datasets["multilayered"].keys():
+        if os.path.exists(get_path("DATA", "FEATURES", key, "V01")) : continue
         file_ds = get_path("DATA", "FEATURES", key, "GRIDDING_MACHINE")
         file_ds_regridded = get_path("DATA", "FEATURES", key, "V01")
         
@@ -119,6 +124,7 @@ def main():
     
     # for the pft dataset we apply conservative mapping
     for key in dict_datasets["categorical"].keys():
+        if os.path.exists(get_path("DATA", "FEATURES", key, "V01")) : continue
         file_ds = get_path("DATA", "FEATURES", key, "GRIDDING_MACHINE")
         file_ds_regridded = get_path("DATA", "FEATURES", key, "V01")
         
