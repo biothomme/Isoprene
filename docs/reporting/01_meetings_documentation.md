@@ -762,7 +762,7 @@ MEETING PLAN: business as usual.
 
 ---
 ## Meeting 12 <a id="M12"></a>
-#### *8th August 2022*
+#### *8th September 2022*
 
 
 **Points for discussion:**
@@ -785,7 +785,7 @@ TODO:
 
 ---
 ## Meeting 13 <a id="M13"></a>
-#### *29th August 2022*
+#### *6th October 2022*
 
 
 **Points for discussion:**
@@ -793,13 +793,17 @@ TODO:
 Refresh: Paper was submitted and download of features (ERA5) is on desk.
 
 - Organisational:
-     1) Official presentation to be decided soon (when Björn is back)
-     2) No news from paper so far
+    1) Official presentation to be decided - what about Monday 24th October 8:00-9:00 pm? Otherwise, check [poll](https://www.when2meet.com/?16985312-k9IHX).
+    2) To have degree earlier for job registration David gave consense to sign the certificate earlier. Alright for Lucas and Björn?
 
 - Progress last week
     - [Earth engine does not work for ERA5](../../notebooks/pinN1_stories/02_methodologies/08_download_era5_with_ee.ipynb) - dataset collection is not 0.1° x 0.1° resolution but 1° x 1°. Microsoft planetary computing a bit better (0.5° x 0.5°)
     - Smoothened the [SLURM scripting and submission](../../notebooks/pinN1_stories/00_slurm/01_make_scripts_and_submit.ipynb)
-    - Established [ERA5 download using the CDS API](../../notebooks/pinN1_stories/02_methodologies/09_download_era5_with_cdsapi.ipynb). Currently running from script on SLURM nodes.
+    - Established [ERA5 download using the CDS API](../../notebooks/pinN1_stories/02_methodologies/09_download_era5_with_cdsapi.ipynb) and downloaded all subareas. For 64x64 pixels x 21 variables x 24 hours x 5 years it took ~5 days.
+    - Regridded the [`GriddingMachine.jl` datasets](../../notebooks/pinN1_stories/02_methodologies//10_regrid_data_finally.ipynb), apart of some very big ones. Therefore, I need to find a solution.
+    - Touched the start of building flexible dataloader.
 
 TODO:
-...
+- Finish regridding with large files
+- Build dataloader
+- Run CliMA land model on data
