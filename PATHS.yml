@@ -271,6 +271,12 @@ NOTEBOOKS:
       ./notebooks/pinN1_stories/02_methodologies/06_regridding_in_python.ipynb
     07_SELECT_SUBAREAS:
       ./notebooks/pinN1_stories/02_methodologies/07_select_vegcovered_subareas.ipynb
+    08_ERA5_EE:
+      ./notebooks/pinN1_stories/02_methodologies/08_download_era5_with_ee.ipynb
+    09_ERA5_CDSAPI:
+      ./notebooks/pinN1_stories/02_methodologies/09_download_era5_with_cdsapi.ipynb
+    10_REGRID_FINALLY:
+      ./notebooks/pinN1_stories/02_methodologies/10_regrid_data_finally.ipynb
   # end METHODOLOGIES
   
   TRIALS:
@@ -280,6 +286,8 @@ NOTEBOOKS:
       ./notebooks/pinN1_stories/03_test_models/01_clima_land_vanilla.ipynb
     02_CLIMA_LAND_MODEL:
       ./notebooks/pinN1_stories/03_test_models/02_clima_land_grownup.ipynb
+    03_DATALOADER:
+      ./notebooks/pinN1_stories/03_test_models/03_dataloader.ipynb
   # end TRIALS
 # end NOTEBOOKS
 

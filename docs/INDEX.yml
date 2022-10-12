@@ -577,7 +577,7 @@ CORE:
           ../notebooks/pinN1_stories/02_methodologies/02_sources_for_data_on_gpp.ipynb
         meta:
           Summaries of datasources that we could use for GPP LSM emulator.
-      
+
       03_CLSOURCES:
         PATH:
           ../notebooks/pinN1_stories/02_methodologies/03_sources_for_clima_land.ipynb
@@ -589,24 +589,42 @@ CORE:
           ../notebooks/pinN1_stories/02_methodologies/04_regrid_clima_land_data.ipynb
         meta:
           Regridding trial datasets using self implementef regridder in Julia.
-      
+
       05_DOWNLOAD_CDS:
         PATH:
-        ../notebooks/pinN1_stories/02_methodologies/05_download_cds_data.ipynb
+          ../notebooks/pinN1_stories/02_methodologies/05_download_cds_data.ipynb
         meta:
           Downloading ERA5 data using the CDS API.
-      
+
       06_REGRID_PYTHON:
         PATH:
-          ./notebooks/pinN1_stories/02_methodologies/06_regridding_in_python.ipynb
+          ../notebooks/pinN1_stories/02_methodologies/06_regridding_in_python.ipynb
         meta:
           Regridding and plotting NetCDF files in python unsing xarray and xESMF.
 
       07_SELECT_SUBAREAS:
         PATH:
-          ./notebooks/pinN1_stories/02_methodologies/07_select_vegcovered_subareas.ipynb
+          ../notebooks/pinN1_stories/02_methodologies/07_select_vegcovered_subareas.ipynb
         meta:
           Selecting subareas (64x64 > 70% vegetation-covered cells with 0.1°x0.1° resolution) for timepoints between 2015 and 2020 with no global overlap for +/- 48 hours.
+
+      08_ERA5_EE:
+        PATH:
+          ../notebooks/pinN1_stories/02_methodologies/08_download_era5_with_ee.ipynb
+        meta:
+          Trying to download ERA5 with google earth engine. Realizing that it does has too low resolution.
+
+      09_ERA5_CDSAPI:
+        PATH:
+          ../notebooks/pinN1_stories/02_methodologies/09_download_era5_with_cdsapi.ipynb
+        meta:
+          Trying to download ERA5 with CDS API. That finally works.
+
+      10_REGRID_FINALLY:
+        PATH:
+          ../notebooks/pinN1_stories/02_methodologies/10_regrid_data_finally.ipynb
+        meta:
+          Regrid all datasets from GriddingMachine.jl. Some of them are tricky (too large). Thus we regrid them in chunks.
     # end METHODOLOGIES
     
     TRIALS:
@@ -621,11 +639,18 @@ CORE:
         meta:
           First try to understand and run the CliMA land v0.1 model. Simple parameter exchange; performed in Julia.
 
-       02_CLIMA_LAND_MODEL:
-          PATH:
-            ../notebooks/pinN1_stories/03_test_models/02_clima_land_grownup.ipynb
-          meta:
-            Assembling CliMA Land model that is used as template for emulation.
+      02_CLIMA_LAND_MODEL:
+        PATH:
+          ../notebooks/pinN1_stories/03_test_models/02_clima_land_grownup.ipynb
+        meta:
+          Assembling CliMA Land model that is used as template for emulation.
+
+      03_DATALOADER:
+        PATH:
+          ../notebooks/pinN1_stories/03_test_models/03_dataloader.ipynb
+        meta:
+          Construction of dataloader that helps to load the complete dataset for the model as well as the emulator.
+        
     # end TRIALS
   # end NOTEBOOKS
   
