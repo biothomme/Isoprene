@@ -1,4 +1,6 @@
 # here one can find a class that splits (large) xarrays into smaller netCDFs
+import numpy as np
+import xarray as xr
 
 class XArraySplitter:
     """XArraySplitter
@@ -6,17 +8,18 @@ class XArraySplitter:
     Class to split source data array into small units given an array template for destination.
     Cuts between the units are performed on congruent tile margins of source and destination.
     """
-    def __init__(self, xarray_source, xarray_dest, threshold=.000001, name_lat="lat", name_lon="lon"):
+    def __init__(self, xarray_source, xarray_dest, threshold=.000001,
+                 name_lat="lat", name_lon="lon", factor=1):
         self.source = xarray_source
         self.dest = xarray_dest
         
         # store names for longitude and latitude
         self.lat, self.lon = name_lat, name_lon
         
-        self.make_splits(threshold=threshold)
+        self.make_splits(threshold=threshold, factor=factor)
         return
     
-    def make_splits(self, threshold=None):
+    def make_splits(self, threshold=None, factor=None):
         """Compute how the source array can be split according to its congruency with the desitination array.
         """
         # lambda to compute the middle points between neighbouring values of a list
@@ -43,17 +46,33 @@ class XArraySplitter:
         # now it is time to compute the splits, that will be conducted
         # therefore, we first need congruent points; i.e. midpoints of both datasets
         # that are almost covering each other
-        dict_points_congruent = {}
-        self.slices = {}
+        dict_points_congruent = {"source": {}, "dest":{}}
+        self.slices = {"source": {}, "dest":{}}
         for dim in [self.lat, self.lon]:
-            midpoints_source = midpoints(self.source[dim].values)
-            midpoints_dest = midpoints(self.dest[dim].values)
-            dict_points_congruent[dim] = [
-                i for i, p in enumerate(midpoints_source)
-                if np.any(np.abs(p-midpoints_dest) < threshold)
-            ]
-            self.slices[dim] = [slice(st, en+1) for st, en in zip(
-                [0, *dict_points_congruent[dim]], [*dict_points_congruent[dim], len(self.source[dim].values)-1])]
+            # we collect all the indices of congruent tile margins in source
+            # and dest array
+            dict_midpoints = {
+                "source": midpoints(self.source[dim].values),
+                "dest": midpoints(self.dest[dim].values)}
+            types = ["source", "dest"]
+            for typ, xar in zip(types, [self.source, self.dest]):
+                typ_other = [t for t in types if t != typ][0]
+                dict_points_congruent[typ][dim] = [
+                    i for i, p in enumerate(dict_midpoints[typ])
+                    if np.any(np.abs(p-dict_midpoints[typ_other]) < threshold)
+                ]
+                slices = [slice(st+1, en+1) for st, en in zip(
+                    [-1, *dict_points_congruent[typ][dim]],
+                    [*dict_points_congruent[typ][dim], len(xar[dim].values)-1])]
+                # we only take the slices that have an index that is multiple of
+                # the given `factor`
+                if len(slices) % factor != 0:
+                    raise ValueError(
+                        f"`factor` {factor} is no divisor of the number of "
+                        f"congruent margins ({len(slices)}).")
+                self.slices[typ][dim] = [
+                    slice(slices[i].start, slices[i+factor-1].stop)
+                    for i in range(0, len(slices)-factor, factor)]
         return 
     
     def __iter__(self):
@@ -61,8 +80,10 @@ class XArraySplitter:
         """
         from itertools import product
         self.iterator = (
-            {self.lon: lo, self.lat: la} for lo, la in product(
-                self.slices[self.lon], self.slices[self.lat]
+            {"source": {self.lon: lo[0], self.lat: la[0]},
+             "dest": {self.lon: lo[1], self.lat: la[1]}} for lo, la in product(
+                zip(self.slices["source"][self.lon], self.slices["dest"][self.lon]),
+                zip(self.slices["source"][self.lat], self.slices["dest"][self.lat])
             )
         )
         return self
@@ -70,4 +91,12 @@ class XArraySplitter:
     def __next__(self):
         """Return next split from dataset.
         """
-        return self.source.isel(next(self.iterator))
+        slice_current = next(self.iterator)
+        return (self.source.isel(slice_current["source"]),
+                self.dest.isel(slice_current["dest"]))
+        
+    def __len__(self):
+        """Return amount of splits of the dataset.
+        """
+        return np.multiply(*map(
+            lambda x : len(self.slices["source"][x])+1, [self.lat, self.lon]))
