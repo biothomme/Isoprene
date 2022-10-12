@@ -414,12 +414,24 @@ CORE:
             ../src/02_methodologies/eeerafetcher.py
           meta:
             Wrapper class to download data (CDS/ERA5) from google earth engine.
-            
+
         REGRIDDER:
           PATH:
             ../src/02_methodologies/regridder.py
           meta:
             Wrapper around xesmf.Regridder to regrid netCDF files.
+
+        SPLITREGRIDDER:
+          PATH:
+            ../src/02_methodologies/splitregridder.py
+          meta:
+            Subclass of RegridderSimple that allows regriddingof huge files as it splits it into smaller arrays and merges the results.
+
+        XARRAYSPLITTER:
+          PATH:
+            ../src/02_methodologies/xarraysplitter.py
+          meta:
+            Class that allows to split source and destination xarrays along congruent grid cell margins.
     # end METHODOLOGIES
 
     TRIALS:

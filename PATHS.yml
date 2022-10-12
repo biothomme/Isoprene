@@ -204,6 +204,10 @@ CODE:
         ./src/02_methodologies/eeerafetcher.py
       REGRIDDER:
         ./src/02_methodologies/regridder.py
+      SPLITREGRIDDER:
+        ./src/02_methodologies/splitregridder.py
+      XARRAYSPLITTER:
+        ./src/02_methodologies/xarraysplitter.py
   # end METHODOLOGIES
 
   SCRIPTS:
