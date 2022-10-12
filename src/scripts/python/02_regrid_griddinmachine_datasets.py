@@ -77,20 +77,25 @@ def split_datasets():
         dict_gmfeatures_grouped[group].update({k: v})
     return dict_gmfeatures_grouped
 
-def get_regridder(name_ncfile):
+def get_regridder(name_ncfile, splitted=False, name_outfile=None):
     """get_regridder
 
     Make regridder instance for given file name.
 
     Args:
         name_ncfile (str): Path of netCDF file.
+        splitted (bool): Choice if RegridderSplitted should be used
 
     Returns:
-        regridder.RegridderSimple: Wrapper for regridding
+        regridder.RegridderSimple or splitregridder.RegridderSplitted:
+            Wrapper for regridding
     """
     from regridder import RegridderSimple
-    return RegridderSimple(name_ncfile)
-
+    from splitregridder import RegridderSplitted
+    
+    if not splitted : return RegridderSimple(name_ncfile)
+    return RegridderSplitted(name_ncfile)
+    return
 
 
 # MAIN
@@ -103,24 +108,38 @@ def main():
     
     # first we make the simple bilinear non temporal scalar regridding
     for key in dict_datasets["simple"].keys():
+        if key == "BIOMASS" : splitted=True
+        else : splitted = False
         if os.path.exists(get_path("DATA", "FEATURES", key, "V01")) : continue
         print(key)
         try:
             file_ds = get_path("DATA", "FEATURES", key, "GRIDDING_MACHINE")
             file_ds_regridded = get_path("DATA", "FEATURES", key, "V01")
         
-            rgs = get_regridder(file_ds)
-            rgs.regrid_and_save(file_ds_regridded)
+            rgs = get_regridder(file_ds, splitted=splitted)
+            if splitted:
+                rgs.regrid_and_save(
+                    file_ds_regridded,
+                    dir_tempfiles=os.path.split(file_ds_regridded)[0],
+                    factor=100)
+            else : rgs.regrid_and_save(file_ds_regridded)
         except TypeError:
             print("failed")
     # next, we do the same for the multilayered soil datsets
     for key in dict_datasets["multilayered"].keys():
+        if key == "SOIL_KSAT" : splitted=True
+        else : splitted = False
         if os.path.exists(get_path("DATA", "FEATURES", key, "V01")) : continue
         file_ds = get_path("DATA", "FEATURES", key, "GRIDDING_MACHINE")
         file_ds_regridded = get_path("DATA", "FEATURES", key, "V01")
         
-        rgs = get_regridder(file_ds)
-        rgs.regrid_and_save(file_ds_regridded)
+        rgs = get_regridder(file_ds, splitted=splitted)
+        if splitted:
+            rgs.regrid_and_save(
+                file_ds_regridded,
+                dir_tempfiles=os.path.split(file_ds_regridded)[0],
+                factor=100)
+        else : rgs.regrid_and_save(file_ds_regridded)
     
     # for the pft dataset we apply conservative mapping
     for key in dict_datasets["categorical"].keys():
