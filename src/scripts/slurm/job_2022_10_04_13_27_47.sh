@@ -2,14 +2,13 @@
 #SBATCH -A snic2022-22-608
 #SBATCH -M rackham
 #SBATCH -p core
-#SBATCH -n 10
-#SBATCH -t 1-00:00:00
+#SBATCH -n 5
+#SBATCH -t 5-00:00:00
 #SBATCH --mail-user thomasmarkus.huber.3696@student.uu.se
 #SBATCH --mail-type=FAIL
 #SBATCH -J job_2022_10_04_13_27_47
 #SBATCH -o /crex/proj/snic2022-23-321/private/thomas/cache/00_slurmlog/slurm-%A.out
 #SBATCH -e /crex/proj/snic2022-23-321/private/thomas/cache/00_slurmlog/slurm-%A.err
-#SBATCH -C mem256GB
 # modules
 
 
