@@ -88,7 +88,7 @@ CORE:
           PATH:
             None
           meta:
-            Year-specific LAI datasets (2015-2019) as downloaded using GriddingMachine.jl and the labels 'LAI_MODIS_10X_8D_2015_V1, 'LAI_MODIS_10X_8D_2016_V1', 'LAI_MODIS_10X_8D_2017_V1', 'LAI_MODIS_10X_8D_2018_V1' and 'LAI_MODIS_10X_8D_2019_V1'.
+            Year-specific LAI datasets (2015-2019) as downloaded using GriddingMachine.jl and the labels 'LAI_MODIS_10X_8D_2015_V1', 'LAI_MODIS_10X_8D_2016_V1', 'LAI_MODIS_10X_8D_2017_V1', 'LAI_MODIS_10X_8D_2018_V1' and 'LAI_MODIS_10X_8D_2019_V1'.
           "2015":
             ../src/.julia/v1.7_depot/artifacts/536d3d2ae3b68a20e158b3ba3972b1d2c68435b0/LAI_MODIS_10X_8D_2015_V1.nc
           "2016":
@@ -434,12 +434,19 @@ CORE:
             Class that allows to split source and destination xarrays along congruent grid cell margins.
     # end METHODOLOGIES
 
-    TRIALS:
+    MODELS:
       PATH:
         ../src/03_test_models
       meta:
         Directory for code/classes that are/could be used in 03_test_models notebooks.
-    # end TRIALS
+
+    PYTHON:
+      DATALOADER:
+        PATH:
+          ./src/03_test_models/dataloader.py
+        meta:
+          Class that supports smooth loading of datafeatures for LSM.
+    # end MODELS
   
     SCRIPTS:
       PATH:

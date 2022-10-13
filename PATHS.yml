@@ -209,6 +209,13 @@ CODE:
       XARRAYSPLITTER:
         ./src/02_methodologies/xarraysplitter.py
   # end METHODOLOGIES
+  MODELS:
+    ROOT:
+      ./src/03_test_models
+    PYTHON:
+      DATALOADER:
+        ./src/03_test_models/dataloader.py
+  # end MODELS
 
   SCRIPTS:
     ROOT:
