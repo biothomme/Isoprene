@@ -20,6 +20,8 @@ class RegridderSplitted(RegridderSimple):
         
         # load the xarray
         self.ds = xr.open_dataset(self.file)
+        if len(self.ds.dims) > 2:
+            self.ds = xr.open_dataset(self.file, chunks={"ind": 1})
         
         # save if nas should be filled
         self.fillna = fill_na

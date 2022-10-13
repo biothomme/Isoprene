@@ -72,7 +72,7 @@ class XArraySplitter:
                         f"congruent margins ({len(slices)}).")
                 self.slices[typ][dim] = [
                     slice(slices[i].start, slices[i+factor-1].stop)
-                    for i in range(0, len(slices)-factor, factor)]
+                    for i in range(0, len(slices), factor)]
         return 
     
     def __iter__(self):
