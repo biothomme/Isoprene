@@ -800,10 +800,30 @@ Refresh: Paper was submitted and download of features (ERA5) is on desk.
     - [Earth engine does not work for ERA5](../../notebooks/pinN1_stories/02_methodologies/08_download_era5_with_ee.ipynb) - dataset collection is not 0.1° x 0.1° resolution but 1° x 1°. Microsoft planetary computing a bit better (0.5° x 0.5°)
     - Smoothened the [SLURM scripting and submission](../../notebooks/pinN1_stories/00_slurm/01_make_scripts_and_submit.ipynb)
     - Established [ERA5 download using the CDS API](../../notebooks/pinN1_stories/02_methodologies/09_download_era5_with_cdsapi.ipynb) and downloaded all subareas. For 64x64 pixels x 21 variables x 24 hours x 5 years it took ~5 days.
-    - Regridded the [`GriddingMachine.jl` datasets](../../notebooks/pinN1_stories/02_methodologies//10_regrid_data_finally.ipynb), apart of some very big ones. Therefore, I need to find a solution.
+    - Regridded the [`GriddingMachine.jl` datasets](../../notebooks/pinN1_stories/02_methodologies/10_regrid_data_finally.ipynb), apart of some very big ones. Therefore, I need to find a solution.
     - Touched the start of building flexible dataloader.
 
 TODO:
 - Finish regridding with large files
 - Build dataloader
+- Run CliMA land model on data
+
+---
+## Meeting 14 <a id="M14"></a>
+#### *13th October 2022*
+
+
+**Points for discussion:**
+
+Refresh: All datasets were downloaded, some issues with regridding large files remained.
+
+- Organisational:
+    1) Doing presentation at later time with more results? There is no official need for stress anymore. Time better used for coding.
+
+- Progress last week
+    - Regridded the [`GriddingMachine.jl` datasets](../../notebooks/pinN1_stories/02_methodologies/10_regrid_data_finally.ipynb). Here we had a problem with large files. So i tried ESMF and other commandlie regridders. Finally, it did not work with those. The files seem to have a strange sturcture. Thus I went back to the code and implemented an XArray/dataset splitter. On congruent gridcell margins of source and destination file, the datasets were cut, then regridded sequentially, stored as temps and finally merged again. [Works](../../notebooks/pinN1_stories/02_methodologies/10_regrid_data_finally.ipynb#regrid_the_big)!
+    - [Building dataloader](../../notebooks/pinN1_stories/03_test_models/03_dataloader.ipynb) for the input features. Therefore, I stack together all datasets to one per subarea and time. Should be iterable.
+
+TODO:
+- Finish dataloader
 - Run CliMA land model on data
