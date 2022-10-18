@@ -9,7 +9,7 @@ from subareacsv import SubareaCSV
 from utils_cdsapi import make_name_outfile
 
 class CDSAPIFetcher:
-    def __init__(self, collection="reanalysis-era5-land",
+    def __init__(self, collection="reanalysis-era5-single-levels",
                  wait_until_complete=True):
         # initialize cds api client
         self._initialize(wait_until_complete)
@@ -116,11 +116,18 @@ class CDSAPIFetcher:
             "soil_temperature_level_4",
             "surface_pressure",
             "surface_sensible_heat_flux",
+            "surface_net_solar_radiation",
+            "surface_net_thermal_radiation",
+            "surface_latent_heat_flux",
+            "surface_solar_radiation_downwards",
+            "surface_thermal_radiation_downwards",
             "total_precipitation",
             "volumetric_soil_water_layer_1",
             "volumetric_soil_water_layer_2",
             "volumetric_soil_water_layer_3",
-            "volumetric_soil_water_layer_4"
+            "volumetric_soil_water_layer_4",
+            "mean_surface_downward_short_wave_radiation_flux",
+            "mean_surface_direct_short_wave_radiation_flux"
             ]
         
         # we assemble a dictionary from the short values and add ...
