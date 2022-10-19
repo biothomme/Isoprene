@@ -24,8 +24,12 @@ DATA:
       V01:
         ROOT:
           ./cache/02_features/era5hourly/v01
+        EXTRA:
+          ./cache/02_features/era5hourly/v01_extra
         LOG:
           ./cache/02_features/era5hourly/v01/2022_09_29_14_25_cdsapifetch.csv
+        LOG_EXTRA:
+          ./cache/02_features/era5hourly/v01_extra/2022_10_19_11_04_cdsapifetch.csv
       # end ERAHOURLY
     BIOMASS:
       ROOT:

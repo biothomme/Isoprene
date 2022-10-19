@@ -49,11 +49,21 @@ CORE:
             ../cache/02_features/era5hourly/v01
           meta:
             v01 of ERA5 data.
+          EXTRA:
+            PATH:
+              ../cache/02_features/era5hourly/v01_extra
+            meta:
+              Additional 2 variables, as they were forgotten. They are not part of the 0.1x0.1 resolved ERA5-Land, but the 0.25x0.25 ERA5 single levels.
           LOG:
             PATH:
               ../cache/02_features/era5hourly/v01/2022_09_29_14_25_cdsapifetch.csv
             meta:
               CSV file that documents the download with CDS API.
+          LOG_EXTRA:
+            PATH:
+              ../cache/02_features/era5hourly/v01_extra/2022_10_19_11_04_cdsapifetch.csv
+            meta:
+              CSV file that documents download of extra dataset with CDS API.
         # end ERA5HOURLY
           BIOMASS:
       ROOT:
