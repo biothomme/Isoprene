@@ -3,7 +3,7 @@
 #SBATCH -M rackham
 #SBATCH -p core
 #SBATCH -n 2
-#SBATCH -t 4-00:00:00
+#SBATCH -t 7-00:00:00
 #SBATCH --mail-user thomasmarkus.huber.3696@student.uu.se
 #SBATCH --mail-type=FAIL
 #SBATCH -J job_2022_09_29_14_16_31

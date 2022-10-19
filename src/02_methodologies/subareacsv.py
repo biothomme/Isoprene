@@ -10,6 +10,7 @@ class SubareaCSV:
     def __init__(self, name_file):
         assert os.path.exists(name_file)
         self.file = name_file
+
         return
     
     def __iter__(self):

@@ -1,7 +1,8 @@
 # Here one can find a class to fetch ERA5 data from CDS using CDS-API
-from urllib.parse import urljoin
 from datetime import datetime
+import numpy as np
 import os
+from urllib.parse import urljoin
 
 from cdsapiclient import ClientMultiRequest
 from csvwriter import CSVWriter
@@ -9,7 +10,9 @@ from subareacsv import SubareaCSV
 from utils_cdsapi import make_name_outfile
 
 class CDSAPIFetcher:
-    def __init__(self, collection="reanalysis-era5-single-levels",
+    def __init__(self, collection="reanalysis-era5-land",
+                 # as alternative larger dataset:
+                 # "reanalysis-era5-single-levels" but lower resolution.
                  wait_until_complete=True):
         # initialize cds api client
         self._initialize(wait_until_complete)
@@ -28,7 +31,7 @@ class CDSAPIFetcher:
     
     def get_data(self, name_csvfile, dict_processlog={}, directory="",
                  name_logcsvfile=None, force=False, force_logger=False,
-                 append_logger=True):
+                 append_logger=True, offset=False, **kwargs):
         # we assign the logging file
         self.make_csv_logger(name_logcsvfile, directory, force=force_logger,
                             append=append_logger)
@@ -42,8 +45,16 @@ class CDSAPIFetcher:
             if name_file in dict_processlog.keys() : continue
             if os.path.exists(name_file) and not force : continue
             
+            # if an additional offset (like a frame around the area) is given
+            # we add it here:
+            if offset:
+                row["area"] = [f(v) for f, v in zip(
+                    [np.ceil, np.floor, np.floor, np.ceil], row["area"])]
+            
             # make the request
-            request = self.assemble_request(**row)
+            request = self.assemble_request(**row, **kwargs)
+            
+            print(request)
             
             # submit it and wait
             timestamp_request = datetime.now()
@@ -125,9 +136,9 @@ class CDSAPIFetcher:
             "volumetric_soil_water_layer_1",
             "volumetric_soil_water_layer_2",
             "volumetric_soil_water_layer_3",
-            "volumetric_soil_water_layer_4",
-            "mean_surface_downward_short_wave_radiation_flux",
-            "mean_surface_direct_short_wave_radiation_flux"
+            "volumetric_soil_water_layer_4" #,
+            # "mean_surface_downward_short_wave_radiation_flux",
+            # "mean_surface_direct_short_wave_radiation_flux"
             ]
         
         # we assemble a dictionary from the short values and add ...
