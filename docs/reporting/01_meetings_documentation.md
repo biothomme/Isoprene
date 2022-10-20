@@ -827,3 +827,28 @@ Refresh: All datasets were downloaded, some issues with regridding large files r
 TODO:
 - Finish dataloader
 - Run CliMA land model on data
+
+---
+## Meeting 15 <a id="M15"></a>
+#### *20th October 2022*
+
+
+**Points for discussion:**
+
+Refresh: All datasets were downloadedand regridded, dataloader to be built.
+
+- Organisational:
+Next week 
+
+- Progress last week
+    - [Dataloader](../../notebooks/pinN1_stories/03_test_models/03_dataloader.ipynb) for the input features is done. Provides a stacked array of all features for a given subarea at one timestep.
+    - Honestly, I found out that I forgot 2 variables as they were not in ERA5-Land but ERA5-Single-Levels. Thus, they have 0.25°x0.25° resoltion. I started download, almost done.
+    - Assembly of [CliMA land model](../../notebooks/pinN1_stories/03_test_models/02_clima_land_grownup.ipynb) seems to get shape. It already produces a value, which I need to compare with other model runs to see its meaning. Should be using a dictionary of features and conduct the simulation on it. Hence, we could run it from the command line.
+    - Started to work on presentation for Björn's lab. Draft until when?
+
+TODO:
+- Regrid and add the 2 missed variables to the era5 dataset
+- Refine and test CliMA land model
+- Use dataloader to iterate through subareas and run CliMA Land on each point.
+- Finish presentation for Björn's lab.
+
