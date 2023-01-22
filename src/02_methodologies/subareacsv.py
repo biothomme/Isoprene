@@ -1,6 +1,11 @@
+# here one can find a class that reads subarea definitions from a csv file
+# as well as subclasses with more extended functionalities
+
 import dateutil
 import os
 import pandas as pd
+
+from utils_cdsapi import make_name_outfile
 
 class SubareaCSV:
     """ SubareaCSV
@@ -45,4 +50,42 @@ class SubareaCSV:
                 ]
             }
         return dict_request
+# end SubareaCSV
 
+
+class NetCDFSubareaCSV(SubareaCSV):
+    def __init__(self, name_file_csv, name_dir_netcdf,
+                 base_netcdfs=None, suffix_netcdfs=None):
+        # init the subarea file
+        super().__init__(name_file_csv)
+        
+        # approve the directory with netcdfs exists
+        assert os.path.exists(name_dir_netcdf)
+        self.dir = name_dir_netcdf
+        self.base_ncdf = base_netcdfs
+        self.sfx_ncdf = suffix_netcdfs
+        return
+    
+    def __next__(self):
+        dict_row = super().__next__()
+        name_ncdf = make_name_outfile("", dict_row)
+        name_ncdf_prcd = self.process_name(name_ncdf)
+        return dict_row, name_ncdf_prcd
+    
+    def process_name(self, name_file):
+        # add base of name
+        if self.base_ncdf is not None:
+            name_file = f"{self.base_ncdf}{name_file}"
+        
+        # add suffix of name
+        if self.sfx_ncdf is not None:
+            name_file = f"{name_file}{self.sfx_ncdf}"
+        
+        # we append the full path
+        name_file = os.path.join(self.dir, name_file)
+        
+        # and warn if it does not exist.
+        if not os.path.exists(name_file):
+            raise Warning(f"Attention, the file {name_file} does not exist.")
+        return name_file
+# end NetCDFSubareaCSV

@@ -48,7 +48,7 @@ def download_era5(cdsapi_fetcher):
     cdsapi_fetcher.get_data(
         FILE_SUBAREAS_V1, directory=DIR_ERA5_V1_EXTRA, name_logcsvfile=FILE_LOG,
         #)
-        offset=True, variables=vars, format="grib")
+        offset=True, variables=vars, format="netcdf", product_type="reanalysis")
     return
 
 

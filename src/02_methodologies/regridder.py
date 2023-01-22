@@ -21,6 +21,7 @@ class RegridderSimple:
         return
     
     def regrid(self, name_latitude="lat", name_longitude="lon",
+               name_latitude_src="lat", name_longitude_src="lon",
                range_latitude=np.arange(-89.95, 89.95+.1, .1),
                range_longitude=np.arange(-179.95, 179.95+.1, .1),
                method="bilinear", extrap_method="nearest_s2d",
@@ -32,6 +33,8 @@ class RegridderSimple:
         Args:
             name_latitude (str, optional): Name of the latitude dimension. Defaults to "lat".
             name_longitude (str, optional): Name of the longitude dimension. Defaults to "lon".
+            name_latitude_src (str, optional): Name of the latitude dimension of the source file. Defaults to "lat".
+            name_longitude_src (str, optional): Name of the longitude dimension of the source file. Defaults to "lon".
             range_latitude (list, optional): Array of latitude coordinates. Defaults to np.arange(-89.95, 89.95+.1, .1).
             range_longitude (list, optional):  Array of longitude coordinates. Defaults to np.arange(-179.95, 179.95+.1, .1).
             method (str, optional): Method for regridding. Defaults to "bilinear".
@@ -45,12 +48,20 @@ class RegridderSimple:
         # we need to avoid combination "conservative" with extrapolation
         if method == "conservative" : extrap_method = None
         
+        # rename the dimensions of longitude and latitude to lon and lat
+        self.ds_temp = self.ds.rename(
+            {
+                name_latitude_src: name_latitude,
+                name_longitude_src: name_longitude
+            }
+        )
+        
         # initialize regridder if not given
         if not hasattr(self, "regridder") or force_new_regridder:
             # making a template dataset with desired shape
             dict_additional_dims = {
-                k: ([k], list(self.ds[k].values))
-                for k in self.ds.dims
+                k: ([k], list(self.ds_temp[k].values))
+                for k in self.ds_temp.dims
                 if k not in [name_latitude, name_longitude]
             }
             ds_tmplt = xr.Dataset({
@@ -58,15 +69,18 @@ class RegridderSimple:
                 "lon": ([name_longitude], range_longitude),
                 **dict_additional_dims
                 })
+            
+            # return ds , ds_tmplt
             # make regridder - this step takes ages
             self.regridder = xe.Regridder(
-                self.ds, ds_tmplt, method, extrap_method=extrap_method)
+                self.ds_temp, ds_tmplt, method)#, extrap_method=extrap_method)
             
         # finally regrid the array and copy the data attributes.
-        ds_regridded = self.regridder(self.ds)
+        ds_regridded = self.regridder(self.ds_temp)
         if copy_attributes : ds_regridded = self._copy_attrs(ds_regridded)
         
         self.ds_regridded = ds_regridded
+        del self.ds_temp
         return ds_regridded
     
     def regrid_and_save(self, name_outfile, force=False, engine="h5netcdf",
@@ -104,7 +118,9 @@ class RegridderSimple:
         """
         STR_NEWLINE = "\n"
         # copy the overall attributes and add annotation
-        ds_regridded.attrs = self.ds.attrs
+        ds_regridded.attrs = self.ds_temp.attrs
+        if not "notes" in self.ds_temp.attrs.keys():
+            ds_regridded.attrs["notes"] = "No initial notes;"
         ds_regridded.attrs["notes"] += (f"{STR_NEWLINE}File was regridded for "
             "master project on Land Surface Modelling "
             f"(https://github.com/biothomme/Isoprene) on {datetime.now()}.")
@@ -112,7 +128,7 @@ class RegridderSimple:
         # copy attributes of each dimension/variable
         keys_ds = [*ds_regridded.dims, *ds_regridded.keys()]
         for key in keys_ds:
-            ds_regridded[key].attrs = self.ds[key].attrs
+            ds_regridded[key].attrs = self.ds_temp[key].attrs
         
         return ds_regridded
 # end RegridderSimple

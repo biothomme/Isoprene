@@ -23,7 +23,10 @@ DATA:
         ./cache/02_features/era5hourly
       V01:
         ROOT:
+          ./cache/02_features/era5hourly/v01_full
+        LAND:
           ./cache/02_features/era5hourly/v01
+        # was renamed from ROOT to LAND after I realized the need for ERA5 single levels EXTRA data
         EXTRA:
           ./cache/02_features/era5hourly/v01_extra
         LOG:

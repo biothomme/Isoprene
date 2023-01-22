@@ -48,7 +48,14 @@ CORE:
           PATH:
             ../cache/02_features/era5hourly/v01
           meta:
-            v01 of ERA5 data.
+            v01 of ERA5 data from merged ERA5 Land and ERA5 Single levels datasets.
+          # was added later as  I realized the need for ERA5 single levels EXTRA data
+          LAND:
+              PATH:
+                ../cache/02_features/era5hourly/v01
+              meta:
+                v01 of ERA5 LAND data.
+            # was renamed from V01 to V01>LAND after I realized the need for ERA5 single levels EXTRA data
           EXTRA:
             PATH:
               ../cache/02_features/era5hourly/v01_extra
